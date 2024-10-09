@@ -2,26 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+@keyframes appear {
+    0%{
+        opacity: 0;
+        transform: translateX(60px);
+    }
+    50%{
+        opacity: 1;
+        transform: translateX(-10px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0px);
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.animation{
+    animation: appear 900ms ease-in-out;
+    /* animation-timeline: view();
+    animation-range: entry 0% cover 40%; */
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes appear2 {
+    0%{
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+    50%{
+        opacity: 1;
+        transform: translateX(10px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+@keyframes dissappear {
+    0%{
+        opacity: 1; 
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.dissappear{
+    animation: dissappear view() ease-in-out;
+}
+.animationsmall{
+    animation: appear2 1200ms ease-in-out;
+    /* animation-timeline: view();
+    animation-range: entry 0% cover 40%; */
+}
+@keyframes appear3 {
+    0%{
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    50%{
+        opacity: 1;
+        transform: translateY(-20px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.mainanimation{
+    animation: appear3 800ms ease-in-out;
+    /* animation-timeline: view();
+    animation-range: entry 0% cover 40%; */
 }

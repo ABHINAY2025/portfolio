@@ -1,8 +1,0 @@
-{
-  "projects": {
-    "default": "port-28b53",
-    "staging": "port-28b53"
-  },
-  "targets": {},
-  "etags": {}
-}

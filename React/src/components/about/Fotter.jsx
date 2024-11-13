@@ -13,4 +13,3 @@ function Fotter() {
 }
 
 export default Fotter
-x

@@ -1,5 +1,5 @@
 
-import Fotter from '../home/fotter'
+import Footer from "../about/Footer"
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
 
@@ -10,6 +10,27 @@ export default function contact() {
         duration:1
         })
     })
+    function prime() {
+        const num=100;
+        for (let index = 0; index < num; index++) {
+            const element =num
+            for (let i = 5; i < Math.sqrt(element); i++) {
+                if (i==2) {
+                    console.log(i)
+                }
+                if (i==3) {
+                    console.log(i)
+                }
+                if (i==5) {
+                    console.log(i)
+                }
+                if (i%num==0) {
+                    console.log(i)
+                }
+            }
+          } 
+        }
+    
   return (
     <>
      <div className='h-[100vh] flex bg-fuchsia-300 justify-center items-center '>
@@ -23,10 +44,10 @@ export default function contact() {
                 <input type="text" className='w-full border-b-2 bg-transparent placeholder-black border-gray-500 py-4 px-2 outline-blue-300 '  placeholder='Name'/>
                 <input type="text" className='w-full border-b-2 bg-transparent placeholder-black   border-gray-500 py-4 px-2 outline-blue-300 ' placeholder='Your Email' />
                 <input type="text" className='w-full border-b-2 bg-transparent placeholder-black border-gray-500 py-4 px-2 outline-blue-300 ' placeholder='Your Name' />
-                <button className='border-2 border-black py-2 w-24 ' type='submit'>submit</button>
+                <button className='border-2 border-black py-2 w-24 'onClick={()=>prime}>submit</button>
             </div>
         </div>
-        <Fotter/>
+        <Footer/>
     </>
   )
 }

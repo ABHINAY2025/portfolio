@@ -18,8 +18,6 @@ export default function Projexct() {
         scrub: 2,
       },
     });
-   
-  
   });
 
 

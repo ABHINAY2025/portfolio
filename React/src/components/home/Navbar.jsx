@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   const[open,setopen]=useState(false)
+  
   return (
     <div className=" border-2 flex  px-10 w-full py-2  justify-between  bg-fuchsia-300 z-10 fixed ">
       <div className="">

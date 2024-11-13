@@ -1,5 +1,5 @@
 
-import Fotter from '../home/fotter'
+import Fotter from '../about/Fotter'
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
 

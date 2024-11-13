@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { useGSAP } from '@gsap/react';
 import Projexct from '../projects/Projexct';
-import Fotter from './fotter';
+import Fotter from './Fotter';
 import gsap from "gsap";
 import abhinay from "../../images/abhinay.jpg"
 

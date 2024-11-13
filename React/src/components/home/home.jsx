@@ -1,5 +1,5 @@
 import Projexct from "../projects/Projexct"
-import Fotter from "./fotter"
+import Fotter from "./Fotter"
 import gsap from "gsap"
 import { useGSAP } from '@gsap/react';
 export default function home() {

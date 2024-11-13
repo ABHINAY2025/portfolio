@@ -1,5 +1,5 @@
 
-import Fotter from "../home/fotter"
+import Fotter from "../home/Fotter"
 import gsap from "gsap"
 import { useGSAP } from '@gsap/react';
 import Resume from "../../resume/IBM.pdf";

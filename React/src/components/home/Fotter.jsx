@@ -1,6 +1,6 @@
-import React from 'react'
 
-function Footer() {
+
+function Fotter() {
   return (
     <>
       <div className=' pt-10 pb-36 px-10 bg-fuchsia-300  border-t-2  border-fuchsia-600 flex gap-6 flex-col'>
@@ -14,4 +14,4 @@ function Footer() {
   )
 }
 
-export default Footer
+export default Fotter

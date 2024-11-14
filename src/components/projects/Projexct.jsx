@@ -1,16 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 
 export default function Projexct() {
+  const [active,setactive]=useState(null)
   gsap.registerPlugin(ScrollTrigger);
   const textref = useRef();
   useGSAP(() => {
     gsap.to(".main h1", {
       transform: "translateX(-100%)",
       scrollTrigger: {
-        trigger: ".main ",
+        trigger: ".main",
         scroller: "body",
         markers: true,
         start: "top 50%",
@@ -18,29 +19,88 @@ export default function Projexct() {
         scrub: 2,
       },
     });
-   
-  
   });
-
-
   return (
     <>
-      <div className=" flex main bg-fuchsia-400 overflow-x-hidden">
+      <div className=" flex main border-b-2 border-black  overflow-x-hidden">
         <h1
           ref={textref}
-          className="translate-x-[100vw] lg:h-[100vh] md:h-[80vh] md:text-[50vh] lg:text-[60vh] text-white font-medium text-[25vh]">
+          className="translate-x-[100vw] lg:h-[100vh] md:h-[80vh] md:text-[50vh] lg:text-[60vh] text-black font-medium text-[25vh]">
           PROJECTS.
         </h1>
       </div>
-      <div className="h-screen overflow-scroll  overflow-x-hidden  overflow-y-hidden bg-fuchsia-300 ">
-        <div className="flex flex-col p-4 lg:flex-row    md:px-20 justify-center gap-4 items-center h-screen">
-        <div className="border-2  border-black w-full h-[100vh] lg:h-[50vh] flex justify-center items-center transition-transform duration-500 cursor-pointer">
-          <a href="https://abhinay2025.github.io/projext-4/">1</a>
-        </div>
-        <div className="border-2  border-black w-full h-[100vh] lg:h-[50vh] flex justify-center items-center transition-transform duration-500 cursor-pointer">2</div>
-        <div className="border-2  border-black w-full h-[100vh] lg:h-[50vh] flex justify-center items-center transition-transform duration-500 cursor-pointer">3</div>
-        </div>
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="grid h-screen w-full  grid-cols-4 grid-rows-4 gap-4  p-2 rounded-lg shadow-lg">
+      <div 
+  onMouseEnter={() => setactive("one")} 
+  onMouseLeave={() => setactive(false)} 
+  className="col-span-2 row-span-3  overflow-hidden rounded-lg shadow-md flex items-center justify-center font-sans">
+  {active=="one" ? (
+    <div className="w-full h-full content-end px-4 bg-black transition-opacity duration-500 ease-in-out opacity-20">
+      <div className="flex flex-col gap-3 mb-5">
+        <p className="text-white text-2xl font-bold">project name</p>
+        <p className="text-white text-lg">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
       </div>
+    </div>
+  ) : (
+    <div className="w-full h-full content-end px-4 bg-black transition-opacity duration-500 ease-in-out opacity-0">
+      <p className="text-black">salmon</p>
+    </div>
+  )}
+</div>
+      <div 
+  onMouseEnter={() => setactive("two")} 
+  onMouseLeave={() => setactive(false)} 
+  className="col-span-2 row-span-1  overflow-hidden rounded-lg shadow-md flex items-center justify-center font-sans">
+  {active=="two" ? (
+    <div className="w-full h-full content-end px-4 bg-black transition-opacity duration-500 ease-in-out opacity-20">
+      <div className="flex flex-col gap-3 mb-5">
+        <p className="text-white text-2xl font-bold">project name</p>
+        <p className="text-white text-lg">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+      </div>
+    </div>
+  ) : (
+    <div className="w-full h-full content-end px-2 bg-black transition-opacity duration-500 ease-in-out opacity-0">
+      <p className="text-black">salmon</p>
+    </div>
+  )}
+</div>
+      <div 
+  onMouseEnter={() => setactive("three")} 
+  onMouseLeave={() => setactive(false)} 
+  className="col-span-2 row-span-4  overflow-hidden rounded-lg shadow-md flex items-center justify-center font-sans">
+  {active=="three" ? (
+    <div className="w-full h-full content-end px-4 bg-black transition-opacity duration-500 ease-in-out opacity-20">
+      <div className="flex flex-col gap-3 mb-5">
+        <p className="text-white text-2xl font-bold">project name</p>
+        <p className="text-white text-lg">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+      </div>
+    </div>
+  ) : (
+    <div className="w-full h-full content-end px-4 bg-black transition-opacity duration-500 ease-in-out opacity-0">
+      <p className="text-black">salmon</p>
+    </div>
+  )}
+</div>
+      <div 
+  onMouseEnter={() => setactive("four")} 
+  onMouseLeave={() => setactive(false)} 
+  className="col-span-2 row-span-2  overflow-hidden rounded-lg shadow-md flex items-center justify-center font-sans">
+  {active=="four" ? (
+    <div className="w-full h-full content-end px-4 bg-black transition-opacity duration-500 ease-in-out opacity-20">
+      <div className="flex flex-col gap-3 mb-5">
+        <p className="text-white text-2xl font-bold">project name</p>
+        <p className="text-white text-lg">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+      </div>
+    </div>
+  ) : (
+    <div className="w-full h-full content-end px-4 bg-black transition-opacity duration-500 ease-in-out opacity-0">
+      <p className="text-black">salmon</p>
+    </div>
+  )}
+</div>
+      </div>
+    </div>
     </>
   );
 }

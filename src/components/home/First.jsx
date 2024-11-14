@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { useGSAP } from '@gsap/react';
 import Projexct from '../projects/Projexct';
-import Fotter from './fotter';
+import Fotter from './Fotter';
 import gsap from "gsap";
 import abhinay from "../../images/abhinay.jpg"
 
@@ -12,8 +12,7 @@ export default function First() {
             gsap.from('.rightbig', { x: 200, duration:2, ease: "elastic.out(0.5,0.4)",}); 
             gsap.from('.rightsmall', { y: -200, duration:2, ease: "elastic.out(0.5,0.4)",}); 
             gsap.from('.leftbig', { x: -200, duration:2, ease: "elastic.out(0.5,0.4)",}); 
-            gsap.from('.leftsmall', { y: 200, duration:2, ease: "elastic.out(0.5,0.4)",}); 
-            // gsap.from('.middle', { y: 300, duration:2, ease: "elastic.out(0.5,0.2)",}); 
+            gsap.from('.leftsmall', { y: 200, duration:2, ease: "elastic.out(0.5,0.4)",});  
         },  
     ); 
   return (

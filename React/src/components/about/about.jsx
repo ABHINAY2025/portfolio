@@ -17,7 +17,6 @@ export default function About() {
       scrollTrigger: {
         trigger: "#text-who",
         scroller: "body",
-        markers: true,
         start: "top 50%",
         end: "top -60%"
       }
@@ -28,7 +27,6 @@ export default function About() {
       scrollTrigger: {
         trigger: "#resume",
         scroller: "body",
-        markers: true,
         start: "top 50%",
         end: "top -60%"
       }
@@ -39,7 +37,6 @@ export default function About() {
       scrollTrigger: {
         trigger: "#overlay",
         scroller: "body",
-        markers: true,
         start: "top 50%",
         end: "top -100%",
       }

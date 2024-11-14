@@ -12,8 +12,7 @@ export default function First() {
             gsap.from('.rightbig', { x: 200, duration:2, ease: "elastic.out(0.5,0.4)",}); 
             gsap.from('.rightsmall', { y: -200, duration:2, ease: "elastic.out(0.5,0.4)",}); 
             gsap.from('.leftbig', { x: -200, duration:2, ease: "elastic.out(0.5,0.4)",}); 
-            gsap.from('.leftsmall', { y: 200, duration:2, ease: "elastic.out(0.5,0.4)",}); 
-            // gsap.from('.middle', { y: 300, duration:2, ease: "elastic.out(0.5,0.2)",}); 
+            gsap.from('.leftsmall', { y: 200, duration:2, ease: "elastic.out(0.5,0.4)",});  
         },  
     ); 
   return (

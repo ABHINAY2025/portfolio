@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
 import Experience from './Experience';
 import { motion } from "framer-motion";
+import Resume from '../../resume/IBM.pdf'
 
 export default function contact() {
     useGSAP(()=>{
@@ -26,10 +27,10 @@ export default function contact() {
   }}
 >
     <div>
-        <div className=' h-[90vh] p-20  flex flex-col  justify-center items-center'>
+        <div className=' pt-60  px-20   flex flex-col  justify-center items-center'>
             <div className='w-full flex justify-between items-center'>
             <h1 className='text-[10vh] italic head font-bold '>Resume.</h1>
-            <button className='border-2 border-black w-52 p-4 hover:bg-blue-200'>Download Resume</button>
+            <a href={Resume} download className='border-2 flex justify-center border-black w-52 p-4 rounded-lg hover:bg-blue-200'>Download Resume</a>
             </div>
             <div className='w-full pt-20'>
                 <h1 className='border-gray-500 py-5 text-3xl font-light italic  border-y-2'>
@@ -37,8 +38,8 @@ export default function contact() {
                 </h1>
             </div>
         </div>
-    </div>
         <Experience/>
+    </div>
         <Fotter/>
     </motion.div>
     </>

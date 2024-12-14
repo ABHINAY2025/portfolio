@@ -17,7 +17,6 @@ export default function About() {
       scrollTrigger: {
         trigger: "#text-who",
         scroller: "body",
-        markers: true,
         start: "top 50%",
         end: "top -60%"
       }
@@ -28,7 +27,6 @@ export default function About() {
       scrollTrigger: {
         trigger: "#resume",
         scroller: "body",
-        markers: true,
         start: "top 50%",
         end: "top -60%"
       }
@@ -39,7 +37,6 @@ export default function About() {
       scrollTrigger: {
         trigger: "#overlay",
         scroller: "body",
-        markers: true,
         start: "top 50%",
         end: "top -100%",
       }
@@ -48,8 +45,7 @@ export default function About() {
 
   return (
     <>
-    
-    <motion.div
+  <motion.div
   initial={{ y: "-100%", opacity: 0 }}  // Start the page above the screen
   animate={{ y: 0, opacity: 1 }}  // Animate it to its normal position
   exit={{ y: "100%", opacity: 0 }}  // Exit by moving it off the screen to the bottom
@@ -86,7 +82,7 @@ export default function About() {
       </div>
       <Fotter />
       </div>
-      </motion.div>
+</motion.div>
       </>
   );
 }

@@ -13,7 +13,6 @@ export default function Projexct() {
       scrollTrigger: {
         trigger: ".main",
         scroller: "body",
-        markers: true,
         start: "top 50%",
         end: "top -100%",
         scrub: 2,

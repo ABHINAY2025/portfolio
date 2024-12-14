@@ -22,6 +22,16 @@ export default function Navbar() {
         <ul className="hidden md:flex gap-20">
           <li>
             <NavLink
+              to="/Frames"
+              className={({ isActive }) =>
+                isActive ? "underline underline-offset-2 text-white" : "text-white"
+              }
+            >
+              Frames
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/about"
               className={({ isActive }) =>
                 isActive ? "underline underline-offset-2 text-white" : "text-white"

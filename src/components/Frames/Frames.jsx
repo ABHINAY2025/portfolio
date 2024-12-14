@@ -17,12 +17,13 @@ function Frames() {
       duration: 1,    // Controls the overall duration of the animation
     }}
   >
-    <div className='h-screen w-full   py-32 px-10'>
-     <Imges/>
+    <div className="h-screen w-full py-16 md:py-32 px-6 md:px-10">
+      {/* Images or content here */}
+      <Imges/>
     </div>
-    </motion.div>
+  </motion.div>
    </>
   )
 }
 
-export default Frames
+export default Frames;

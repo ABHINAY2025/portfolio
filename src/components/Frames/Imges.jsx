@@ -42,14 +42,14 @@ export default function ImageGallery() {
   return (
     <div className="max-w-7xl h-screen mx-auto px-4 py-8">
       {/* Header Animation */}
-      <div className="border-b-2 border-black ">
-      <h1 id="text" className="text-[13vh] italic  font-bold text-center mb-8">
-        FRAMES
-      </h1>
+      <div className="">
+        <h1 id="text" className="text-[5vh] sm:text-[13vh] italic font-bold text-center mb-8">
+          FRAMES
+        </h1>
       </div>
 
       {/* Responsive Masonry Grid */}
-      <div className="columns-1 mt-10 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4">
         {imageList.map((src, index) => (
           <div
             key={index}
@@ -58,7 +58,7 @@ export default function ImageGallery() {
             <img
               src={src}
               alt={`Image ${index}`}
-              className="w-full object-cover"
+              className="w-full h-auto object-cover"
             />
           </div>
         ))}

@@ -1,78 +1,133 @@
-import React from 'react';
+import React from "react";
 import { FaLinkedinIn } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function Fotter() {
   return (
-    <>
-      <div className='flex justify-between items-center bg-black '>
-        <div className='w-full border-b-2 p-10 border-white flex gap-10 justify-between'>
-          <div className='text-white text-lg'>ABHINAY_MA</div>
-          <div className='text-white flex  flex-col  justify-between gap-7'>
-            <div className='text-lg '>
+    <footer className="relative min-h-[30vh] overflow-hidden">
+
+      {/* ================= BASE BACKGROUND ================= */}
+      <div
+        className="absolute inset-0 -z-20"
+        style={{
+          background:
+            "linear-gradient(135deg,#8fd3ff 0%,#bcd8ff 45%,#f3c2dd 100%)"
+        }}
+      />
+
+      {/* ================= WAVES ================= */}
+      <div className="absolute bottom-0 left-0 w-full h-[85%] overflow-hidden -z-10 grain">
+        {/* ↑ increased from 30% → 45% */}
+
+        <svg
+          viewBox="0 0 1440 450"
+          preserveAspectRatio="none"
+          className="absolute bottom-0 w-[130%] h-full left-[-15%]"
+          /* ↑ scale up for bigger curves */
+        >
+
+          {/* BACK WAVE */}
+          <motion.path
+            d="
+              M0,130
+              C180,40 360,220 620,180
+              C880,140 1080,280 1280,220
+              C1380,200 1420,220 1440,210
+              L1440,450 L0,450 Z"
+            fill="rgba(140,215,255,0.90)"
+            animate={{ x: [0, -70, 0] }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+          {/* MIDDLE WAVE */}
+          <motion.path
+            d="
+              M0,220
+              C200,160 400,340 680,300
+              C960,260 1160,380 1340,320
+              C1400,300 1430,310 1440,305
+              L1440,450 L0,450 Z"
+            fill="rgba(255,180,215,0.85)"
+            animate={{ x: [0, 110, 0] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+          {/* FRONT WAVE */}
+          <motion.path
+            d="
+              M0,300
+              C200,260 420,380 700,360
+              C980,340 1160,420 1340,390
+              C1400,380 1425,395 1440,392
+              L1440,450 L0,450 Z"
+            fill="rgba(180,225,255,0.95)"
+            animate={{ x: [0, -140, 0] }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+        </svg>
+      </div>
+
+      {/* ================= FOOTER CONTENT ================= */}
+
+      <div className="relative z-20">
+
+        {/* TOP INFO BAR */}
+        <div className="p-10 flex justify-between items-center border-b border-white/40">
+          <div className="text-white text-lg tracking-wide">
+            ABHINAY_MA
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <p className="text-white text-lg">
               Let's work together.
-            </div>
-            <a href='mailto:abhinayabhi2025@gmail.com' className='font-bold text-lg text-blue-400'>
+            </p>
+            <a
+              href="mailto:abhinayabhi2025@gmail.com"
+              className="text-blue-300 font-semibold hover:text-blue-200"
+            >
               Reach out
             </a>
           </div>
         </div>
-      </div>
 
-      <div className="flex px-10 w-full py-4 bg-black justify-between items-center z-10">
-        {/* Navigation Links for Desktop and Mobile */}
-        <nav className='flex justify-between w-full items-center'>
-          <ul className='flex flex-col text-xl gap-10'>
-            <li>
-              <NavLink
-                to="/Frames"
-                className={({ isActive }) =>
-                  isActive ? "underline underline-offset-2 text-white" : "text-white"
-                }
-              >
-                Frames
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  isActive ? "underline underline-offset-2 text-white" : "text-white"
-                }
-              >
-                About Me
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? "underline underline-offset-2 text-white" : "text-white"
-                }
-              >
-                Work
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  isActive ? "underline underline-offset-2 text-white" : "text-white"
-                }
-              >
-                Resume
-              </NavLink>
-            </li>
+        {/* NAV + SOCIAL */}
+        <div className="flex justify-between items-end p-10">
+
+          <ul className="flex flex-col gap-5 text-white text-lg">
+            <li><NavLink to="/Frames">Frames</NavLink></li>
+            <li><NavLink to="/about">About Me</NavLink></li>
+            <li><NavLink to="/">Work</NavLink></li>
+            <li><NavLink to="/contact">Resume</NavLink></li>
           </ul>
 
-          <div className='text-white text-4xl'>
-            <a href='https://www.linkedin.com/in/abhinay-ma/' target='_blank' rel="noopener noreferrer">
-              <FaLinkedinIn />
-            </a>
-          </div>
-        </nav>
+          <a
+            href="https://www.linkedin.com/in/abhinay-ma/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white text-4xl hover:text-blue-200"
+          >
+            <FaLinkedinIn />
+          </a>
+
+        </div>
+
       </div>
-    </>
+
+    </footer>
   );
 }
 

@@ -27,7 +27,6 @@ const posters = [
   "https://streambly.com.au/sites/default/files/article_images/money_heist_5_poster.jpeg"
 ];
 
-
 export default function ILander() {
 
   const [headlineIndex, setHeadlineIndex] = useState(0);
@@ -36,29 +35,23 @@ export default function ILander() {
 
   const containerRef = useRef(null);
 
-
   /* -------- Headline Swap -------- */
   useEffect(() => {
-    const t = setInterval(
-      () => setHeadlineIndex(i => (i + 1) % words.length),
-      2000
-    );
-
+    const t = setInterval(() => {
+      setHeadlineIndex(i => (i + 1) % words.length);
+    }, 2000);
     return () => clearInterval(t);
   }, []);
 
   /* -------- Poster Autoplay -------- */
   useEffect(() => {
-
     if (!expanded) return;
 
-    const t = setInterval(
-      () => setPosterIndex(i => (i + 1) % posters.length),
-      3500
-    );
+    const t = setInterval(() => {
+      setPosterIndex(i => (i + 1) % posters.length);
+    }, 3500);
 
     return () => clearInterval(t);
-
   }, [expanded]);
 
   /* -------- Drag Snap -------- */
@@ -71,34 +64,42 @@ export default function ILander() {
     }
   };
 
-
   return (
-    <motion.div
-      ref={containerRef}
+<motion.div
+  ref={containerRef}
+  initial={{ x: "-50%" }}
+  animate={{ x: "-50%" }}
 
-      initial={{ x: "-50%" }}
-      animate={{ x: "-50%" }}
+  onMouseEnter={() => setExpanded(true)}
+  onMouseLeave={() => setExpanded(false)}
 
-      onMouseEnter={() => setExpanded(true)}
-      onMouseLeave={() => setExpanded(false)}
+  className={`
+    fixed top-10 left-[calc(50%+48px)] z-[90]
+    grain backdrop-blur-[30px] bg-white/20
+    border border-white/20
+    rounded-[26px] md:rounded-[36px]
+    shadow-[0_10px_30px_rgba(255,255,255,0.18)]
+    transition-all duration-[850ms]
+    ease-[cubic-bezier(0.22,1,0.36,1)]
+    overflow-hidden
 
-      className={`
-        fixed top-20 left-1/2 z-[90]
-        grain backdrop-blur-[30px] bg-white/20
-        border border-white/20
-        rounded-[36px]
-        shadow-[0_10px_30px_rgba(255,255,255,0.18)]
-        transition-all duration-[850ms]
-        ease-[cubic-bezier(0.22,1,0.36,1)]
-        overflow-hidden
-
-        ${expanded
-          ? "w-[95vw] max-w-[1550px] h-[660px] px-12 py-10"
-          : "w-[280px] h-[56px] px-6 py-3"
-        }
-      `}
-    >
-
+    ${expanded
+      ? `
+        w-[92vw] max-w-[1500px]
+        h-[min(75vh,560px)]
+        px-4 md:px-10 lg:px-12
+        py-4 md:py-8
+        overflow-y-auto
+      `
+      : `
+        w-[230px] md:w-[260px]
+        h-[46px] md:h-[52px]
+        px-4 md:px-6
+        py-2 md:py-2.5
+      `
+    }
+  `}
+>
       {/* COLLAPSED */}
       {!expanded && (
         <div className="text-center font-semibold text-black">
@@ -109,11 +110,18 @@ export default function ILander() {
       {/* EXPANDED */}
       {expanded && (
 
-        <div className="grid h-full grid-cols-[1.4fr_2fr] gap-10">
+        <div className="
+          grid h-full
+          grid-cols-1 lg:grid-cols-[1.2fr_2fr]
+          gap-4 md:gap-8
+        ">
 
           {/* ================= IMAGE CAROUSEL ================= */}
           <div className="
             relative
+            min-h-[280px]
+            sm:min-h-[340px]
+            lg:h-full
             bg-white/20 backdrop-blur-xl
             border border-white/20
             rounded-2xl overflow-hidden
@@ -156,17 +164,20 @@ export default function ILander() {
 
           {/* ================= RIGHT BENTO GRID ================= */}
 
-                    <div className="grid grid-cols-2 gap-6 h-full">
+          <div className="
+            grid grid-cols-1 sm:grid-cols-2
+            gap-4 md:gap-6
+            h-full
+          ">
 
-            {/* COLUMN 1 -> 70% / 30% */}
-            <div className="grid grid-rows-[7fr_3fr] gap-6">
+            {/* COLUMN 1 */}
+            <div className="grid grid-rows-[7fr_3fr] gap-4 md:gap-6">
               <NowPlaying />
               <BentoCard title="🔥 Focus Time" value="2.6 hrs" />
             </div>
 
-
-            {/* COLUMN 2 -> 30% / 70% */}
-            <div className="grid grid-rows-[3fr_7fr] gap-6">
+            {/* COLUMN 2 */}
+            <div className="grid grid-rows-[3fr_7fr] gap-4 md:gap-6">
               <BentoCard title="🚶 Steps" value="5,762" />
               <BentoCard title="⚡ Click Rate" value="89%" />
             </div>
@@ -181,7 +192,8 @@ export default function ILander() {
         className="
           pointer-events-none
           absolute bottom-0 left-1/2 -translate-x-1/2
-          w-[80%] h-[50px]
+          w-[70%] sm:w-[80%]
+          h-[35px] sm:h-[50px]
           rounded-full blur-[30px]
           bg-[#00f0ff]
           opacity-70

@@ -1,6 +1,5 @@
 import Projexct from "../projects/Projexct";
 import Fotter from "./Fotter";
-
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { motion } from "framer-motion";
@@ -100,11 +99,11 @@ export default function Home() {
               <span className="text-black">.”</span>
             </h1>
 
-            <p className="reveal mt-6 italic text-white/90">
-              — Abhinay Ma
+            <p className="reveal mt-6 italic text-black/90">
+              — Abhinay_Ma
             </p>
 
-            <p className="reveal mt-2 text-white/70">
+            <p className="reveal mt-2 text-black/70">
               Full-Stack Developer · Building ideas into reality
             </p>
 

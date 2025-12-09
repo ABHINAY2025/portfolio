@@ -2,7 +2,7 @@ import Home from "./components/home/home";
 import About from "./components/about/about";
 import Frames from "./components/Frames/Frames";
 import Contact from "./components/contact/contact";
-
+import ILander from "./components/home/ILander";
 import Navbar from "./components/home/Navbar";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -11,9 +11,12 @@ import "./App.css";
 function App() {
   return (
     <BrowserRouter>
-      
+
+      {/* ✅ GLOBAL FLOATING ISLAND */}
+      <ILander />
+
       {/* ✅ APP GRID LAYOUT */}
-      <div className="min-h-screen grid grid-cols-[96px_1fr] relative">
+      <div className="min-h-screen grid grid-cols-[96px_1fr]">
 
         {/* ✅ NAVBAR COLUMN */}
         <div className="relative">

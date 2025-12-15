@@ -1,8 +1,14 @@
 import abhinay from "../../images/abhinay.jpg";
 import { motion } from "framer-motion";
 import Fotter from "../home/Fotter";
+import { useRef } from "react";
+
+
+
 
 export default function About() {
+
+  const draggedRef = useRef(false);
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -59,52 +65,151 @@ export default function About() {
 
 </section>
 
+{/* ================= FLOATING DRAGGABLE RESUME PILL ================= */}
+<motion.a
+      href="/src/resume/IBM.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+
+      drag
+      dragMomentum={false}
+      dragElastic={0.12}
+
+      onDragStart={() => {
+        draggedRef.current = true;
+      }}
+
+      onDragEnd={() => {
+        // small delay so click doesn't fire after drag
+        setTimeout(() => {
+          draggedRef.current = false;
+        }, 50);
+      }}
+
+      onClick={(e) => {
+        if (draggedRef.current) {
+          e.preventDefault(); // 🚫 STOP PDF OPEN
+        }
+      }}
+
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.95 }}
+
+      className="
+        fixed
+        top-[90px] md:top-24
+        right-4 md:right-8
+        z-[1300]
+        px-6 py-3
+        rounded-full
+        bg-white/80 backdrop-blur-md
+        border border-black/10
+        text-sm font-semibold
+        text-black
+        shadow-lg
+        cursor-grab active:cursor-grabbing
+        select-none
+      "
+    >
+      Resume ↗
+    </motion.a>
+      
+      
+      
+{/* ============================= EXPERIENCE ============================= */}
+<section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
+
+  {/* SECTION HEADER */}
+  <h2 className="uppercase text-sm tracking-widest text-gray-500 mb-4">
+    Experience
+  </h2>
+
+  <h3 className="text-2xl md:text-3xl font-semibold mb-12 text-black">
+    Building systems, products & real-world solutions.
+  </h3>
+
+  {/* GRID */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+    {/* CARD 1 — CURRENT */}
+    <div className="p-6 border border-red-500  rounded-2xl hover:shadow-lg transition">
+      <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">
+        Current
+      </p>
+
+      <h4 className="text-lg font-semibold">
+        Java + Microservices Backend Developer
+      </h4>
+
+      <p className="text-gray-700 font-medium mt-1">
+        FISEC Global
+      </p>
+
+      <p className="text-gray-600 text-sm mt-3 leading-relaxed">
+        Working on backend systems using Java and microservices architecture,
+        focusing on scalable APIs, service-to-service communication, and
+        enterprise-grade backend reliability.
+      </p>
+    </div>
+
+    {/* CARD 2 */}
+    <div className="p-6 border rounded-2xl hover:shadow-lg transition">
+
+      <h4 className="text-lg font-semibold">
+        Project Management Job Simulation
+      </h4>
+
+      <p className="text-gray-700 font-medium mt-1">
+        Accenture North America · Forage
+      </p>
+
+      <p className="text-gray-600 text-sm mt-3 leading-relaxed">
+        Acted as a project manager for a new brand launch. Mapped Plan-Driven,
+        Agile, Scaled Agile, and Hybrid methodologies across a portfolio of
+        projects.
+      </p>
+    </div>
+
+    {/* CARD 3 */}
+    <div className="p-6 border rounded-2xl hover:shadow-lg transition">
+
+      <h4 className="text-lg font-semibold">
+        Web Development Intern
+      </h4>
+
+      <p className="text-gray-700 font-medium mt-1">
+        Motion Cut
+      </p>
+
+      <p className="text-gray-600 text-sm mt-3 leading-relaxed">
+        Built responsive, user-friendly interfaces using HTML, CSS, and
+        JavaScript. Implemented dynamic content updates and improved UI
+        performance across devices.
+      </p>
+    </div>
+
+    {/* CARD 4 */}
+    <div className="p-6 border rounded-2xl hover:shadow-lg transition">
 
 
-      {/* ============================= LEADERSHIP SECTION ============================= */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-10">
-        <h2 className="uppercase text-sm tracking-widest text-gray-500 mb-4">
-          Leadership
-        </h2>
+      <h4 className="text-lg font-semibold">
+        Software Engineering Virtual Experience
+      </h4>
 
-        <h3 className="text-2xl md:text-3xl font-semibold mb-10 text-black">
-          I cultivated communities & teams.
-        </h3>
+      <p className="text-gray-700 font-medium mt-1">
+        J.P. Morgan Chase & Co. · Forage
+      </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <p className="text-gray-600 text-sm mt-3 leading-relaxed">
+        Fixed broken repository files, set up a local dev environment, and used
+        JPMorgan’s <span className="font-medium">Perspective</span> library to
+        build live data visualizations for traders.
+      </p>
+    </div>
 
-          {/* CARD 1 */}
-          <div>
-            <img
-              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902"
-              className="rounded-xl w-full h-60 object-cover"
-            />
-            <h4 className="font-semibold mt-4">Design Lead</h4>
-            <p className="text-gray-600 text-sm">Tech & Innovation Club</p>
-          </div>
+  </div>
+</section>
 
-          {/* CARD 2 */}
-          <div>
-            <img
-              src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b"
-              className="rounded-xl w-full h-60 object-cover"
-            />
-            <h4 className="font-semibold mt-4">President</h4>
-            <p className="text-gray-600 text-sm">UX Community Group</p>
-          </div>
-
-          {/* CARD 3 */}
-          <div>
-            <img
-              src="https://images.unsplash.com/photo-1551836022-4c4c79ecde51"
-              className="rounded-xl w-full h-60 object-cover"
-            />
-            <h4 className="font-semibold mt-4">Vice President</h4>
-            <p className="text-gray-600 text-sm">Design Consulting</p>
-          </div>
-
-        </div>
-      </section>
 
 
       {/* ============================= CORE VALUES ============================= */}

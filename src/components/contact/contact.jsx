@@ -1,63 +1,119 @@
-import Fotter from "../home/Fotter";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import Experience from "./Experience";
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
-import Resume from "../../resume/IBM.pdf";
+import Fotter from "../home/Fotter";
 
 export default function Contact() {
-  useGSAP(() => {
-    gsap.from(".head", {
-      x: -1000,
-      duration: 1,
-    });
-  });
+  const formRef = useRef();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const sendEmail = (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  emailjs
+    .send(
+      "service_9w569cb",
+      "template_ne9lmwb",
+      {
+        name: formRef.current.name.value,
+        email: formRef.current.email.value,
+        message: formRef.current.message.value,
+      },
+      "Q-n2ALEwD_MZMJ9m3"
+    )
+    .then(
+      () => {
+        setSuccess(true);
+        setLoading(false);
+        formRef.current.reset();
+      },
+      (error) => {
+        console.error("EmailJS Error:", error);
+        setLoading(false);
+      }
+    );
+};
+
 
   return (
     <>
       <motion.div
-        initial={{ y: "-100%", opacity: 0 }} // Start the page above the screen
-        animate={{ y: 0, opacity: 1 }} // Animate it to its normal position
-        exit={{ y: "100%", opacity: 0 }} // Exit by moving it off the screen to the bottom
-        transition={{
-          type: "spring", // Use spring animation for elasticity
-          stiffness: 50, // Controls how stiff the spring is (higher = less bouncy)
-          damping: 15, // Controls how much the spring resists the bounce
-          duration: 1, // Controls the overall duration of the animation
-        }}
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="min-h-screen flex items-center justify-center px-6"
       >
-        <div>
-          {/* Main Container */}
-          <div className="pt-32 md:pt-40 lg:pt-60 px-6 md:px-10 lg:px-20 flex flex-col justify-center items-center">
-            {/* Heading and Download Section */}
-            <div className="w-full flex flex-col md:flex-row justify-between items-center gap-6">
-              <h1 className="text-5xl md:text-7xl lg:text-[10vh] italic head font-bold">
-                Resume.
-              </h1>
-              <a
-                href={Resume}
-                download
-                className="border-2 border-black w-full md:w-52 text-center p-4 rounded-lg hover:bg-blue-300 transition duration-200"
-              >
-                Download Resume
-              </a>
-            </div>
+        <div className="w-full max-w-2xl bg-white rounded-3xl shadow-xl p-8">
 
-            {/* Experience Section */}
-            <div className="w-full pt-10 md:pt-20">
-              <h1 className="border-gray-500 py-5 text-2xl md:text-3xl font-light italic border-y-2">
-                Experience
-              </h1>
-            </div>
-          </div>
+          <h1 className="text-3xl font-semibold mb-2 text-black">
+            Let’s talk 👋
+          </h1>
+          <p className="text-gray-600 mb-8">
+            Have an idea, question, or opportunity? Drop a message.
+          </p>
 
-          {/* Experience Component */}
-          <Experience />
+<form ref={formRef} onSubmit={sendEmail} className="space-y-6">
+
+  {/* NAME */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Your Name
+    </label>
+    <input
+      type="text"
+      name="name"   // ✅ MUST MATCH {{name}}
+      required
+      className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black"
+    />
+  </div>
+
+  {/* EMAIL */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Email Address
+    </label>
+    <input
+      type="email"
+      name="email"  // ✅ MUST MATCH {{email}}
+      required
+      className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black"
+    />
+  </div>
+
+  {/* MESSAGE */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Message
+    </label>
+    <textarea
+      name="message" // ✅ MATCHES {{message}}
+      rows="4"
+      required
+      className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-black"
+    />
+  </div>
+
+  <button
+    type="submit"
+    disabled={loading}
+    className="w-full py-3 rounded-full bg-black text-white font-semibold"
+  >
+    {loading ? "Sending..." : "Send Message"}
+  </button>
+
+  {success && (
+    <p className="text-green-600 text-center text-sm">
+      Message sent successfully ✨
+    </p>
+  )}
+
+</form>
         </div>
-
-        {/* Footer */}
-        <Fotter />
       </motion.div>
+
+      <Fotter />
     </>
   );
 }

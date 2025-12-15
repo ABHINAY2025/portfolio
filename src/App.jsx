@@ -6,17 +6,23 @@ import Contact from "./components/contact/contact";
 import ILander from "./components/home/ILander";
 import Navbar from "./components/home/Navbar";
 
+// 🆕 BLOG PAGES
+import BlogList from "./components/blog/blog-list";
+import BlogPost from "./components/blog/blogs";
+
+// 🆕 NEWSROOM
+import Newsroom from "./components/Newsroom/Newsroom";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 function App() {
-
   const [menuOpen, setMenuOpen] = useState(true);
 
   return (
     <BrowserRouter>
 
-      {/* FLOATING ISLAND - always visible, but changes z-index when menu opens */}
+      {/* FLOATING ISLAND */}
       <ILander menuOpen={menuOpen} />
 
       <div
@@ -35,10 +41,20 @@ function App() {
         {/* MAIN CONTENT */}
         <main className="relative min-h-screen overflow-x-hidden bg-transparent pt-[110px] md:pt-0">
           <Routes>
+
+            {/* CORE PAGES */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/Frames" element={<Frames />} />
+            <Route path="/frames" element={<Frames />} />
             <Route path="/contact" element={<Contact />} />
+
+            {/* BLOG */}
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+
+            {/* 📰 NEWSROOM */}
+            <Route path="/newsroom" element={<Newsroom />} />
+
           </Routes>
         </main>
       </div>

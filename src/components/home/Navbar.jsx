@@ -8,7 +8,7 @@ export default function Navbar({ setMenuOpen }) {
   const navItems = [
     { to: "/", label: "HOME" },
     { to: "/about", label: "ABOUT" },
-    { to: "/blogs", label: "BLOG" },
+    { to: "/blog", label: "BLOG" },
     { to: "/Frames", label: "LAB" },
     { to: "/newsroom", label: "NEWSROOM" },
     { to: "/contact", label: "CONTACT" },

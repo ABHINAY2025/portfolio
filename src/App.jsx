@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Home from "./components/home/home";
 import About from "./components/about/about";
 import Frames from "./components/Frames/Frames";
@@ -9,22 +10,30 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 function App() {
+
+  const [menuOpen, setMenuOpen] = useState(true);
+
   return (
     <BrowserRouter>
 
-      {/* ✅ GLOBAL FLOATING ISLAND */}
-      <ILander />
+      {/* FLOATING ISLAND - always visible, but changes z-index when menu opens */}
+      <ILander menuOpen={menuOpen} />
 
-      {/* ✅ APP GRID LAYOUT */}
-      <div className="min-h-screen grid grid-cols-[96px_1fr]">
-
-        {/* ✅ NAVBAR COLUMN */}
+      <div
+        className="
+          min-h-screen 
+          grid 
+          grid-cols-1
+          md:grid-cols-[96px_1fr]
+        "
+      >
+        {/* NAVBAR */}
         <div className="relative">
-          <Navbar />
+          <Navbar setMenuOpen={setMenuOpen} />
         </div>
 
-        {/* ✅ MAIN CONTENT COLUMN */}
-        <main className="relative min-h-screen overflow-x-hidden bg-transparent">
+        {/* MAIN CONTENT */}
+        <main className="relative min-h-screen overflow-x-hidden bg-transparent pt-[110px] md:pt-0">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -32,7 +41,6 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
-
       </div>
 
     </BrowserRouter>

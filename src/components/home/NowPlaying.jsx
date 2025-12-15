@@ -35,6 +35,7 @@ export default function NowPlaying() {
   const analyserRef = useRef(null);
   const sourceRef = useRef(null);
   const audioCtxRef = useRef(null);
+  const isMobile = window.innerWidth < 640;
   const rafRef = useRef(null);
 
   const [playing, setPlaying] = useState(false);
@@ -129,24 +130,25 @@ export default function NowPlaying() {
         text-white
       "
     >
-
       {/* AUDIO */}
       <audio ref={audioRef} src={AUDIO_SRC} preload="metadata" />
 
-      {/* GREEN GLOW */}
+      {/* GLOW */}
       <div className="
         absolute -top-24 right-[-60px]
-        w-[300px] h-[300px]
+        w-[260px] h-[260px]
         bg-[#1db954]
-        blur-[140px]
-        opacity-40
-        pointer-events-none
+        blur-[130px]
+        opacity-40 pointer-events-none
       "/>
 
       {/* HEADER */}
-      <header className="flex justify-between items-center mb-5 relative z-10">
-
-        <h3 className="tracking-[4px] text-xs text-[#1db954] font-bold">
+      <header className="flex justify-between items-center mb-4 relative z-10">
+        <h3 className="
+          tracking-[3px]
+          text-[10px] sm:text-xs
+          text-[#1db954] font-bold
+        ">
           LIFELINES
         </h3>
 
@@ -155,43 +157,43 @@ export default function NowPlaying() {
           target="_blank"
           rel="noreferrer"
           className="
-            px-4 py-1.5
+            px-3 py-1
             bg-[#1db954] text-black
-            text-xs font-bold
+            text-[10px] sm:text-xs font-bold
             rounded-full shadow-lg
+            whitespace-nowrap
           "
         >
           OPEN SPOTIFY
         </a>
-
       </header>
 
       {/* MAIN BLOCK */}
-      <div className="flex gap-5 items-center relative z-10">
+      <div className="flex gap-3 sm:gap-5 items-center relative z-10">
 
+        {/* ALBUM COVER */}
         <img
           src={COVER_SRC}
           alt="album"
-          className="
-            w-[96px] h-[96px]
-            rounded-xl
-            object-cover
-            border border-white/20
+          className={`
+            rounded-xl object-cover border border-white/20
             shadow-[0_0_25px_rgba(29,185,84,.45)]
-          "
+            ${isMobile ? "w-[70px] h-[70px]" : "w-[96px] h-[96px]"}
+          `}
         />
 
+        {/* TEXT SECTION */}
         <div className="flex-1">
-          <h4 className="text-sm font-semibold">
+          <h4 className="font-semibold text-[12px] sm:text-sm leading-tight">
             Arctic Monkeys – 505
           </h4>
 
-          <p className="text-xs opacity-70">
+          <p className="text-[10px] sm:text-xs opacity-70">
             Favourite Worst Nightmare
           </p>
 
           {/* PROGRESS BAR */}
-          <div className="mt-3 h-1 bg-white/15 rounded-full overflow-hidden">
+          <div className="mt-2 h-1 bg-white/15 rounded-full overflow-hidden">
             <motion.div
               animate={{ width: `${progress}%` }}
               transition={{ ease: "linear" }}
@@ -204,36 +206,34 @@ export default function NowPlaying() {
         <motion.button
           onClick={toggle}
           whileTap={{ scale: 0.85 }}
-          whileHover={{ scale: 1.08 }}
-          className="
-            w-[56px] h-[56px]
-            flex items-center justify-center
-            rounded-full
-            bg-[#1db954]
-            shadow-[0_0_30px_rgba(29,185,84,.85)]
-          "
+          whileHover={{ scale: 1.05 }}
+          className={`
+            flex items-center justify-center rounded-full bg-[#1db954]
+            shadow-[0_0_25px_rgba(29,185,84,.85)]
+            ${isMobile ? "w-[42px] h-[42px]" : "w-[56px] h-[56px]"}
+          `}
         >
           {playing ? <PauseIcon /> : <PlayIcon />}
         </motion.button>
-
       </div>
 
-      {/* ---------------- REAL WAVES ---------------- */}
-      <div className="
-        absolute bottom-5 left-0 w-full
-        flex justify-center items-end gap-[5px]
-        px-8 h-[44px] z-10
-      ">
-        {waveData.map((h, i) => (
-          <motion.div
-            key={i}
-            animate={{ height: `${h}%` }}
-            transition={{ ease: "easeOut", duration: 0.07 }}
-            className="w-[5px] bg-[#1db954] rounded-full"
-          />
-        ))}
-      </div>
-
+      {/* WAVES */}
+      {!isMobile && (
+        <div className="
+          absolute bottom-5 left-0 w-full
+          flex justify-center items-end
+          gap-[5px] px-8 h-[44px] z-10
+        ">
+          {waveData.map((h, i) => (
+            <motion.div
+              key={i}
+              animate={{ height: `${h}%` }}
+              transition={{ ease: "easeOut", duration: 0.07 }}
+              className="w-[5px] bg-[#1db954] rounded-full"
+            />
+          ))}
+        </div>
+      )}
     </BentoCard>
   );
 }

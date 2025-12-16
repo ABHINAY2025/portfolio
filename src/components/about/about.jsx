@@ -67,7 +67,7 @@ export default function About() {
 
 {/* ================= FLOATING DRAGGABLE RESUME PILL ================= */}
 <motion.a
-      href="/src/resume/IBM.pdf"
+      href="/resume/IBM.pdf"
       target="_blank"
       rel="noopener noreferrer"
 

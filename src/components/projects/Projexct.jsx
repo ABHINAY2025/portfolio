@@ -1,109 +1,90 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-// import CustomCursor from "../CustomCursor";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Projexct() {
   const [hovered, setHovered] = useState(null);
+  const navigate = useNavigate();
 
   const projects = [
     {
       id: 1,
-      title: "SoFi for Small Businesses",
-      desc: "A redesigned expense management platform for SMBs.",
-      img: "https://static0.colliderimages.com/wordpress/wp-content/uploads/2023/09/everything-now-netflix-poster.jpg",
-      tags: ["PRODUCT DESIGN", "FULL PROCESS", "2024"],
+      title: "AI-Powered AR Structure Viewer",
+      desc: "View famous monuments like the Taj Mahal in real surroundings using AR.",
+      img: "/posters/ar-4.webp",
+      route: "/projects/ar-viewer",
+      tags: ["AR", "AI", "3D", "2025"],
       gradient: "from-[#d8f1ff] to-[#e0f6ff]",
     },
     {
       id: 2,
-      title: "Apple Services",
-      desc: "Component systems and tools for design teams.",
-      img: "https://mir-s3-cdn-cf.behance.net/project_modules/1400/f8b2ef92655071.5e505bf7132ab.png",
-      tags: ["PRODUCT DESIGN", "DESIGN SYSTEMS", "2025"],
+      title: "Smart Invoice Generator",
+      desc: "Create professional invoices with auto-calculations and exports.",
+      img: "/posters/invoice-2.png",
+      route: "/projects/invoice-maker",
+      tags: ["FULL-STACK", "FINTECH", "2024"],
       gradient: "from-[#ffd8f3] to-[#ffe2f8]",
-    },
-    {
-      id: 3,
-      title: "E-Wallet Dashboard",
-      desc: "A financial dashboard concept for digital payments.",
-      img: "https://wallpapercave.com/wp/wp3050967.jpg",
-      tags: ["UI/UX", "DASHBOARD", "FINTECH"],
-      gradient: "from-[#e3ffd8] to-[#f0ffe5]",
-    },
-    {
-      id: 4,
-      title: "Creative Storyboard",
-      desc: "A cinematic storyboard exploration.",
-      img: "https://alternativemovieposters.com/wp-content/uploads/2017/05/chelsea_saul.jpg",
-      tags: ["ART DIRECTION", "CONCEPT DESIGN"],
-      gradient: "from-[#ffe7d8] to-[#fff0e5]",
     },
   ];
 
   return (
-    
-    <div className="w-full py-28 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24">
-     {/* <CustomCursor hovered={hovered} /> */}
-      {/* GRID LAYOUT — 2 PER ROW */}
-      <div
-  className="
-    grid
-    grid-cols-1 
-    md:grid-cols-2 
-    gap-12 
-    lg:gap-16 
-    xl:gap-20
-    w-full
-  "
->
+    <section className="w-full py-24 px-4 sm:px-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
 
         {projects.map((p) => (
-          <div key={p.id} className="relative">
+          <div key={p.id} className="flex flex-col items-center">
 
             {/* CARD */}
-<motion.div
-  onMouseEnter={() => setHovered(p.id)}
-  onMouseLeave={() => setHovered(null)}
-  initial={{ opacity: 0, y: 50 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.7, ease: "easeOut" }}
-  viewport={{ once: true }}
-  className={`
-    w-full rounded-[32px]
-    bg-gradient-to-br ${p.gradient}
-    shadow-[0_20px_60px_rgba(0,0,0,0.08)]
-  `}
->
-  <img
-    src={p.img}
-    className="
-      rounded-[28px] 
-      w-full 
-      h-[330px] md:h-[380px] lg:h-[420px]
-      object-cover 
-    "
-  />
-</motion.div>
+            <motion.div
+              onMouseEnter={() => setHovered(p.id)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => navigate(p.route)}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className={`
+                cursor-pointer
+                w-full
+                max-w-[520px]
+                rounded-[28px]
+                bg-gradient-to-br ${p.gradient}
+                shadow-[0_20px_50px_rgba(0,0,0,0.08)]
+                overflow-hidden
+              `}
+            >
+              {/* 🔥 SAME SIZE CONTAINER FOR BOTH */}
+              <div className="aspect-[4/3] w-full">
+                <img
+                  src={p.img}
+                  alt={p.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
+
             {/* TEXT */}
-            <div className="mt-6">
-              <h2 className="text-2xl md:text-[26px] font-semibold text-black">
+            <div className="mt-6 max-w-[520px] text-center md:text-left">
+              <h2 className="text-xl md:text-[22px] font-semibold text-black">
                 {p.title}
               </h2>
 
-              <p className="text-gray-700 text-sm md:text-base mt-1">
+              <p className="text-gray-700 text-sm md:text-[15px] mt-1">
                 {p.desc}
               </p>
 
               {/* TAGS */}
-              <div className="flex gap-2 flex-wrap mt-3">
+              <div className="flex gap-2 flex-wrap mt-4 justify-center md:justify-start">
                 {p.tags.map((tag) => (
                   <span
                     key={tag}
                     className="
-                      text-[10px] md:text-xs 
-                      px-3 py-1 border rounded-md 
-                      text-gray-700
+                      text-[10px]
+                      px-3 py-1
+                      border border-black/10
+                      rounded-full
+                      text-gray-600
                     "
                   >
                     {tag}
@@ -115,6 +96,6 @@ export default function Projexct() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

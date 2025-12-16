@@ -5,6 +5,8 @@ import Frames from "./components/Frames/Frames";
 import Contact from "./components/contact/contact";
 import ILander from "./components/home/ILander";
 import Navbar from "./components/home/Navbar";
+import ARViewer from "./components/ARViewer";
+import InvoiceMaker from "./components/InvoiceMaker";
 
 // 🆕 BLOG PAGES
 import BlogList from "./components/blog/blog-list";
@@ -51,6 +53,11 @@ function App() {
             {/* BLOG */}
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+
+            
+            {/* PROJECTS */}
+            <Route path="/projects/ar-viewer" element={<ARViewer />} />
+            <Route path="/projects/invoice-maker" element={<InvoiceMaker />} />
 
             {/* 📰 NEWSROOM */}
             <Route path="/newsroom" element={<Newsroom />} />

@@ -24,3 +24,23 @@ body {
 body {
   overflow-y: auto;
 }
+
+
+/* Stripe Gradient Required Variables */
+:root {
+   /* --gradient-color-1: #020617;
+  --gradient-color-2: #020617; 
+  --gradient-color-3: #4e4e4e; 
+  --gradient-color-4: #020617;  */
+
+  --gradient-color-1: #f97316;
+  --gradient-color-2: #ec4899;
+  --gradient-color-3: #8b5cf6;
+  --gradient-color-4: #38bdf8;
+}
+
+/* Motion control */
+#gradient-canvas {
+  --gradient-speed: 0.0006; /* subtle, cinematic */
+}
+

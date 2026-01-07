@@ -47,7 +47,7 @@ function App() {
             {/* CORE PAGES */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/frames" element={<Frames />} />
+            <Route path="/SssneakPeek" element={<Frames />} />
             <Route path="/contact" element={<Contact />} />
 
             {/* BLOG */}

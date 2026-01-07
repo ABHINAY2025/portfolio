@@ -9,7 +9,7 @@ export default function Navbar({ setMenuOpen }) {
     { to: "/", label: "HOME" },
     { to: "/about", label: "ABOUT" },
     { to: "/blog", label: "BLOG" },
-    { to: "/Frames", label: "LAB" },
+    { to: "/SssneakPeek", label: "A Sssneak Peek" },
     { to: "/newsroom", label: "NEWSROOM" },
     { to: "/contact", label: "CONTACT" },
   ];
@@ -190,22 +190,32 @@ export default function Navbar({ setMenuOpen }) {
             lg:pl-32     /* laptop/desktop */
           "
         >
-          {navItems.map((item, i) => (
-            <NavLink
-              key={item.label}
-              to={item.to}
-              onClick={() => setOpen(false)}
-              style={{ transitionDelay: open ? `${i * 90}ms` : "0ms" }}
-              className={`
-                text-4xl md:text-5xl uppercase tracking-[0.2em]
-                text-black transition-all duration-[600ms]
-                ${open ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"}
-                hover:tracking-[0.3em] hover:opacity-60
-              `}
-            >
-              {item.label}
-            </NavLink>
-          ))}
+{navItems.map((item, i) => {
+  const isSneakPeek = item.label === "A Sssneak Peek";
+
+  return (
+<NavLink
+  key={item.label}
+  to={item.to}
+  onClick={() => setOpen(false)}
+  style={{ transitionDelay: open ? `${i * 90}ms` : "0ms" }}
+  className={`
+    text-4xl md:text-5xl uppercase tracking-[0.2em]
+    transition-all duration-[600ms]
+    ${open ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"}
+    hover:tracking-[0.3em] hover:opacity-60
+    ${
+      isSneakPeek
+        ? "text-black hover:animate-redBlue"
+        : "text-black"
+    }
+  `}
+>
+  {item.label}
+</NavLink>
+
+        );
+      })}
         </nav>
       </div>
     </>

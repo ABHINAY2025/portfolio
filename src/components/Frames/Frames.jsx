@@ -1,121 +1,100 @@
-import React from "react";
-import Fotter from "../home/Fotter";
+"use client";
+
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { Gradient } from "stripe-gradient";
+import Fotter from "../home/Fotter";
 
 export default function Frames() {
+  useEffect(() => {
+    const gradient = new Gradient();
+    gradient.initGradient("#gradient-canvas");
+  }, []);
+
   return (
-    <>
-      <motion.div
-        initial={{ y: "-100%", opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: "100%", opacity: 0 }}
-        transition={{
-          type: "spring",
-          stiffness: 50,
-          damping: 15,
-          duration: 1,
-        }}
-      >
-        {/* PAGE WRAP */}
-        <div className="min-h-screen w-full px-6 sm:px-10 md:px-20 lg:px-32 py-24 bg-[#eef3f8]">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -40 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="relative min-h-screen overflow-hidden"
+    >
+      {/* STRIPE GRADIENT CANVAS */}
+      <canvas
+        id="gradient-canvas"
+        className="absolute inset-0 w-full h-full -z-10"
+        data-js-darken-top
+        data-transition-in
+      />
 
-          {/* HEADER */}
-          <div className="max-w-5xl mx-auto mb-20">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-800">
-              AND WHAT ELSE?
-            </h1>
+      {/* CONTENT */}
+      <div className="px-6 sm:px-10 md:px-20 lg:px-32 py-28">
+        {/* HEADER */}
+        <div className="max-w-5xl mx-auto mb-20">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white">
+            AND WHAT ELSE?
+          </h1>
 
-            <p className="text-gray-500 tracking-widest mt-3 text-sm sm:text-base">
-              A PEEK INTO MY OTHER LIVES &lt;3
-            </p>
-          </div>
-
-          {/* STORY BLOCK 1 */}
-          <div className="max-w-5xl mx-auto mb-16">
-            <p className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
-              [&] I’ve been an ambassador for my favorite energy drink, Celsius.
-            </p>
-
-            {/* Images Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <img
-                src="https://i.ibb.co/7zKQmZT/celsius1.jpg"
-                className="w-full rounded-lg object-cover"
-                alt=""
-              />
-
-              <img
-                src="https://i.ibb.co/WvHMWZp/celsius2.jpg"
-                className="w-full rounded-lg object-cover"
-                alt=""
-              />
-
-              <img
-                src="https://i.ibb.co/5F9x5wM/celsius3.jpg"
-                className="w-full rounded-lg object-cover"
-                alt=""
-              />
-            </div>
-          </div>
-
-          {/* STORY BLOCK 2 */}
-          <div className="max-w-5xl mx-auto mb-16">
-            <p className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
-              [&] I also build small digital experiences just for fun.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <img
-                src="https://i.ibb.co/bKWk8Ht/mockup1.png"
-                className="w-full rounded-lg"
-                alt=""
-              />
-
-              <img
-                src="https://i.ibb.co/G7sW0dq/mockup2.png"
-                className="w-full rounded-lg"
-                alt=""
-              />
-
-              <img
-                src="https://i.ibb.co/PT0JpHP/mockup3.png"
-                className="w-full rounded-lg"
-                alt=""
-              />
-            </div>
-          </div>
-
-          {/* STORY BLOCK 3 */}
-          <div className="max-w-5xl mx-auto mb-16">
-            <p className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
-              [&] Sometimes life gives tiny core-memory moments too.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <img
-                src="https://i.ibb.co/ZhK5fzv/memory1.jpg"
-                className="w-full rounded-lg"
-                alt=""
-              />
-
-              <img
-                src="https://i.ibb.co/Jy9dpWz/memory2.jpg"
-                className="w-full rounded-lg"
-                alt=""
-              />
-
-              <img
-                src="https://i.ibb.co/8z4M2h5/memory3.jpg"
-                className="w-full rounded-lg"
-                alt=""
-              />
-            </div>
-          </div>
-
+          <p className="text-gray-300 tracking-widest mt-6 text-sm sm:text-base">
+            A PEEK INTO MY OTHER LIVES &lt;3
+          </p>
         </div>
 
-        <Fotter />
-      </motion.div>
-    </>
+        {/* IMAGES + HEADINGS */}
+        <div className="max-w-5xl mx-auto space-y-32">
+          {/* IMAGE 1 */}
+          <div className="space-y-6">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-widest uppercase text-white">
+              Energy that hits harder ⛩️
+            </h2>
+            <h3 className="text-lg font-bold text-white">
+              Unleash Your Inner Power. Stay Cool. Go Beyond.
+            </h3>
+
+            <motion.img
+              src="/3.png"
+              alt=""
+              className="w-screen object-cover
+              "
+            />
+          </div>
+
+          {/* IMAGE 2 */}
+          <div className="space-y-6">
+            <h2 className=" text-2xl font-extrabold tracking-widest uppercase text-white">
+              Moments That Make Legends 🏆
+            </h2> 
+            <h3 className="text-lg font-bold text-white">
+              Inspired by focus discipline and greatness.
+            </h3>
+
+            <motion.img
+              src="/2.png"
+              alt=""
+              className="w-full object-cover
+              "
+            />
+          </div>
+
+          {/* IMAGE 3 */}
+          <div className="space-y-6">
+            <h2 className=" text-2xl font-extrabold tracking-widest uppercase text-white">
+              Life & Memories ❤️
+            </h2>
+            <h3 className="text-lg font-bold text-gray-100">
+              Tiny Core-Memory Moments
+            </h3>
+
+            <motion.img
+              src="/1.png"
+              alt=""
+              className="w-full object-cover
+              "
+            />
+          </div>
+        </div>
+      </div>
+
+    </motion.div>
   );
 }

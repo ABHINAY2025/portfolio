@@ -101,7 +101,7 @@ export default function Home() {
 
     {/* LOGO (CLICKABLE + BIGGER) */}
     <img
-      src="/src/images/FISEC-LOGO.svg"
+      src="/FISEC-LOGO.svg"
       alt="Fisec Global"
       className="h-8 sm:h-10 md:h-12 object-contain opacity-100"
     />

@@ -5,7 +5,7 @@ import { dirname, join, resolve } from 'path';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync } from 'fs';
 import { networkInterfaces } from 'os';
 import xlsx from 'xlsx';
-import { connectDb, collections } from './db.js';
+import { connectDb, collections, dbStatus } from './db.js';
 
 // Load .env (project root) into process.env. Built-in to Node ≥20.6; if the
 // file is missing (e.g. the host injects env vars directly) this is a no-op.
@@ -302,7 +302,15 @@ app.get('/api/leads.xlsx', requireAdmin, async (_req, res, next) => {
 
 app.get('/api/health', async (_req, res, next) => {
   try {
-    res.json({ ok: true, store: collections() ? 'mongo' : 'disk', count: await countLeads() });
+    const cols = collections();
+    const s = dbStatus();
+    res.json({
+      ok: true,
+      store: cols ? 'mongo' : 'disk',
+      hasMongoUri: s.hasMongoUri,
+      mongoError: s.error,
+      count: cols ? await countLeads() : 0,
+    });
   } catch (e) {
     next(e);
   }

@@ -9,6 +9,7 @@ import { MongoClient } from 'mongodb';
 let client = null;
 let db = null;
 let connecting = null; // in-flight connection promise (so we connect once)
+let lastError = null;  // last connection failure reason (for /api/health diagnostics)
 
 export async function connectDb() {
   if (db) return db;               // already connected (reused across warm invocations)
@@ -16,6 +17,7 @@ export async function connectDb() {
 
   const uri = process.env.MONGO_URI;
   if (!uri) {
+    lastError = 'MONGO_URI is not set in the environment';
     console.warn('[db] MONGO_URI not set — using local-disk storage (dev fallback)');
     return null;
   }
@@ -31,9 +33,11 @@ export async function connectDb() {
       await client.connect();
       db = client.db(); // database name comes from the URI path (…/news)
       await db.command({ ping: 1 });
+      lastError = null;
       console.log(`[db] connected to MongoDB → db "${db.databaseName}"`);
       return db;
     } catch (e) {
+      lastError = e.message;
       console.error(`[db] connection failed (${e.message}) — falling back to disk`);
       client = null;
       db = null;
@@ -47,6 +51,17 @@ export async function connectDb() {
 
 export function getDb() {
   return db;
+}
+
+/* Lightweight status for /api/health. Exposes whether MONGO_URI reached the
+   process and the last error message (Mongo errors don't include the password),
+   so deployment misconfig can be diagnosed without server log access. */
+export function dbStatus() {
+  return {
+    connected: !!db,
+    hasMongoUri: !!process.env.MONGO_URI,
+    error: lastError ? String(lastError).slice(0, 160) : null,
+  };
 }
 
 /* The two collections we use, or null when running in disk-fallback mode. */

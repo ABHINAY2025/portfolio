@@ -12,17 +12,22 @@ import Writing from './components/sections/Writing.jsx';
 import Article from './components/sections/Article.jsx';
 import Resume from './components/sections/Resume.jsx';
 import Contact from './components/sections/Contact.jsx';
-import Game from './components/widgets/Game.jsx';
 import Konami from './components/widgets/Konami.jsx';
 import { useContent } from './data/content-context.jsx';
+import { GAME_URL } from './data/content.jsx';
 
 export default function App() {
   const content = useContent();
   const [view, setView] = React.useState('home');
   const [activeWriting, setActiveWriting] = React.useState(null);
 
-  // every view navigates instantly — no page transitions
+  // every view navigates instantly — no page transitions.
+  // the egg-catcher game is deployed separately, so "Game" opens it in a new tab.
   const go = React.useCallback((v) => {
+    if (v === 'game') {
+      window.open(GAME_URL, '_blank', 'noopener,noreferrer');
+      return;
+    }
     setView(v);
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
@@ -64,7 +69,6 @@ export default function App() {
 
         {view === 'work' && <Projects items={content.projects} />}
         {view === 'stack' && <Stack items={content.stack} />}
-        {view === 'game' && <Game />}
         {view === 'writing' && <Writing go={go} onOpen={openWriting} items={content.writings} />}
         {view === 'article' && <Article go={go} writing={activeWriting} />}
         {view === 'resume' && <Resume go={go} contact={content.contact} />}

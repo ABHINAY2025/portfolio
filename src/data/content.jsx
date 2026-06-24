@@ -9,6 +9,7 @@ import { IconHeart, IconStar, IconDiamond } from '../components/ui/Icons.jsx';
    ============================================================ */
 
 export const RESUME_URL = '/resume/Abhinay_Resume.pdf';
+export const GAME_URL = 'https://games.abhinay.online'; // egg-catcher is deployed separately
 export const GITHUB_URL = 'https://github.com/ABHINAY2025';
 export const FISEC_URL = 'https://fisecglobal.net/';
 export const EMAIL = 'abhinayabhi2025@gmail.com';

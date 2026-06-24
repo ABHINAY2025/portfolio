@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
+import { dirname, join, resolve } from 'path';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync } from 'fs';
 import { networkInterfaces } from 'os';
 import xlsx from 'xlsx';
@@ -13,14 +13,17 @@ try { process.loadEnvFile(join(dirname(fileURLToPath(import.meta.url)), '..', '.
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, 'data');
-if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
 const FILE = join(DATA_DIR, 'leads.xlsx');
 const SHEET = 'leads';
 
 // ---- admin content store (editable site content) ----
 const CONTENT_FILE = join(DATA_DIR, 'content.json');
 const UPLOADS_DIR = join(DATA_DIR, 'uploads');
-if (!existsSync(UPLOADS_DIR)) mkdirSync(UPLOADS_DIR, { recursive: true });
+
+// Local disk dirs for the disk-fallback store. Wrapped because serverless
+// filesystems (e.g. Vercel) are read-only — there we use MongoDB, not disk.
+try { if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true }); } catch {}
+try { if (!existsSync(UPLOADS_DIR)) mkdirSync(UPLOADS_DIR, { recursive: true }); } catch {}
 // Set a strong ADMIN_KEY env var in production. This default is for local dev only.
 const ADMIN_KEY = process.env.ADMIN_KEY || 'retro-admin';
 
@@ -507,15 +510,14 @@ if (existsSync(DIST_INDEX)) {
   console.log('[devXchange-api] no dist/ build found — API only (run `npm run build` for single-origin serving)');
 }
 
-const PORT = process.env.API_PORT || 5174;
-
-async function start() {
+export async function startServer() {
   await connectDb();
   try {
     await migrateDiskToMongo();
   } catch (e) {
     console.warn(`[migrate] skipped (${e.message})`);
   }
+  const PORT = process.env.API_PORT || 5174;
   app.listen(PORT, () => {
     const cols = collections();
     console.log(`[devXchange-api] listening on http://localhost:${PORT}`);
@@ -526,4 +528,11 @@ async function start() {
   });
 }
 
-start();
+// Start a real listener only when run directly (node server/server.js or npm
+// start). When imported as a module — e.g. by the Vercel serverless function —
+// we just export the app and let the platform invoke it per request.
+const invokedDirectly =
+  process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+if (invokedDirectly) startServer();
+
+export default app;

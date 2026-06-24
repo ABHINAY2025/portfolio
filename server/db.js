@@ -8,31 +8,41 @@ import { MongoClient } from 'mongodb';
 
 let client = null;
 let db = null;
+let connecting = null; // in-flight connection promise (so we connect once)
 
 export async function connectDb() {
+  if (db) return db;               // already connected (reused across warm invocations)
+  if (connecting) return connecting; // a connection is already in progress
+
   const uri = process.env.MONGO_URI;
   if (!uri) {
     console.warn('[db] MONGO_URI not set — using local-disk storage (dev fallback)');
     return null;
   }
-  try {
-    // promoteBuffers: binary fields come back as Node Buffers (not BSON Binary),
-    // so uploaded files can be streamed straight to the response.
-    client = new MongoClient(uri, {
-      serverSelectionTimeoutMS: 8000,
-      promoteBuffers: true,
-    });
-    await client.connect();
-    db = client.db(); // database name comes from the URI path (…/news)
-    await db.command({ ping: 1 });
-    console.log(`[db] connected to MongoDB → db "${db.databaseName}"`);
-    return db;
-  } catch (e) {
-    console.error(`[db] connection failed (${e.message}) — falling back to disk`);
-    client = null;
-    db = null;
-    return null;
-  }
+
+  connecting = (async () => {
+    try {
+      // promoteBuffers: binary fields come back as Node Buffers (not BSON Binary),
+      // so uploaded files can be streamed straight to the response.
+      client = new MongoClient(uri, {
+        serverSelectionTimeoutMS: 8000,
+        promoteBuffers: true,
+      });
+      await client.connect();
+      db = client.db(); // database name comes from the URI path (…/news)
+      await db.command({ ping: 1 });
+      console.log(`[db] connected to MongoDB → db "${db.databaseName}"`);
+      return db;
+    } catch (e) {
+      console.error(`[db] connection failed (${e.message}) — falling back to disk`);
+      client = null;
+      db = null;
+      connecting = null; // allow a later retry
+      return null;
+    }
+  })();
+
+  return connecting;
 }
 
 export function getDb() {

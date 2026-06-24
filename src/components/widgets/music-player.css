@@ -1,0 +1,221 @@
+/* Music player widget + pixel kid sprite + boombox — extracted from the old design system */
+/* ============================================
+   music player widget — fixed bottom-left
+   ============================================ */
+
+.music-player {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  z-index: 50;
+  background: var(--cream);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  border-radius: 4px;
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  user-select: none;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.music-player:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0 var(--ink);
+}
+
+.music-player.is-playing {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--mint) 100%);
+}
+
+.music-player__inner {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+}
+
+.music-player__main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 200px;
+}
+
+.music-player__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.music-player__eyebrow {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: var(--purple-night);
+}
+
+.music-player__title {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.music-player__eq {
+  display: inline-flex;
+  gap: 3px;
+  height: 14px;
+  align-items: flex-end;
+}
+
+.music-player__eq span {
+  display: block;
+  width: 4px;
+  background: var(--ink);
+  height: 30%;
+}
+
+.is-playing .music-player__eq span { animation: eq 0.85s ease-in-out infinite; }
+.is-playing .music-player__eq span:nth-child(1) { background: var(--purple); animation-delay: -0.1s; }
+.is-playing .music-player__eq span:nth-child(2) { background: var(--coral);  animation-delay: -0.4s; }
+.is-playing .music-player__eq span:nth-child(3) { background: var(--yellow); animation-delay: -0.2s; }
+.is-playing .music-player__eq span:nth-child(4) { background: var(--green);  animation-delay: -0.6s; }
+.is-playing .music-player__eq span:nth-child(5) { background: var(--blue);   animation-delay: -0.3s; }
+
+@keyframes eq {
+  0%, 100% { height: 22%; }
+  50%      { height: 100%; }
+}
+
+/* toggle = boombox button */
+.music-player__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 7px;
+  border: 3px solid var(--ink);
+  background: var(--yellow);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  transition: transform 80ms ease, box-shadow 80ms ease, background 200ms;
+}
+
+.music-player.is-playing .music-player__toggle {
+  background: var(--coral);
+}
+
+.music-player__toggle:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.music-player__toggle:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.music-player__toggle-label { white-space: nowrap; }
+
+.music-player__hint {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  background: var(--ink);
+  color: var(--mint);
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  padding: 6px 8px 5px;
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--purple);
+  animation: hint-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+@media (max-width: 540px) {
+  .music-player { left: 12px; bottom: 12px; padding: 10px; }
+  .music-player__main { min-width: 0; }
+  .music-player__title { font-size: 9px; max-width: 130px; }
+  .music-player__eyebrow { font-size: 7px; }
+}
+
+/* ============================================
+   90s pixel kid sprite
+   ============================================ */
+
+.kid {
+  display: block;
+  flex: none;
+  filter: drop-shadow(2px 3px 0 rgba(26, 21, 48, 0.18));
+}
+
+.kid__head { transform-origin: 50% 65px; }
+.kid__body { transform-origin: 50% 70px; }
+
+.kid--bobbing .kid__head { animation: kid-bob 520ms ease-in-out infinite; }
+.kid--bobbing .kid__body { animation: kid-sway 520ms ease-in-out infinite; }
+.kid--idle .kid__head    { animation: kid-breathe 3.2s ease-in-out infinite; }
+.kid--idle .kid__body    { animation: kid-breathe 3.2s ease-in-out infinite; animation-delay: -0.3s; }
+
+@keyframes kid-bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-3px) rotate(3deg); }
+}
+@keyframes kid-sway {
+  0%, 100% { transform: translateY(0) rotate(2deg); }
+  50%      { transform: translateY(-1px) rotate(-2deg); }
+}
+@keyframes kid-breathe {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-1px); }
+}
+
+.kid__notes .note {
+  font-family: var(--font-pixel);
+  opacity: 0;
+  animation: float-note 1.6s ease-out infinite;
+}
+.kid__notes .note--1 { animation-delay: 0s; }
+.kid__notes .note--2 { animation-delay: -0.55s; }
+.kid__notes .note--3 { animation-delay: -1.1s; }
+
+@keyframes float-note {
+  0%   { opacity: 0; transform: translate(0, 0); }
+  20%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(8px, -22px); }
+}
+
+/* ============================================
+   boombox sound waves + screen
+   ============================================ */
+
+.boombox { display: block; overflow: visible; }
+
+.boombox .bx-wave { opacity: 0; }
+.boombox--on .bx-wave { animation: bx-pulse 0.9s ease-out infinite; }
+.boombox--on .bx-wave--l1 { animation-delay: 0s; }
+.boombox--on .bx-wave--l2 { animation-delay: -0.3s; }
+.boombox--on .bx-wave--r1 { animation-delay: 0s; }
+.boombox--on .bx-wave--r2 { animation-delay: -0.3s; }
+
+@keyframes bx-pulse {
+  0%   { opacity: 0; transform: scale(0.6); }
+  40%  { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+.boombox--on .bx-screen { animation: bx-screen 0.6s steps(2) infinite; }
+@keyframes bx-screen {
+  0%, 100% { fill: #5DB7E8; }
+  50%      { fill: #FFD86B; }
+}

@@ -4,18 +4,20 @@ import {
   SelectField, ImageField, FileField, inputCls, labelCls,
 } from './fields.jsx';
 import { mergeContent } from '../../data/content-context.jsx';
-import { PALETTE } from '../../data/content.jsx';
-import { ICON_NAMES } from '../../data/icons.jsx';
+import { PALETTE, CONTENT_VERSION } from '../../data/content.jsx';
+import { skills } from '../../data/skills.js';
 
 import Hero from '../sections/Hero.jsx';
 import About from '../sections/About.jsx';
 import Experience from '../sections/Experience.jsx';
-import Stack from '../sections/Stack.jsx';
 import Projects from '../sections/Projects.jsx';
 import Writing from '../sections/Writing.jsx';
 import Footer from '../layout/Footer.jsx';
 
 const noop = () => {};
+
+/* tool ids offered in the admin (the logos in /public/skills) */
+const TOOL_HINT = `comma-separated logo ids — e.g. ${[...new Set(skills.map((s) => s.id))].slice(0, 12).join(', ')}…`;
 
 /* stable keys for list rows so inputs keep their state across reorders */
 let KID = 0;
@@ -27,18 +29,17 @@ function keyContent(c) {
   return {
     ...c,
     experience: withKeys(c.experience),
-    stack: withKeys(c.stack),
     projects: withKeys(c.projects),
     writings: withKeys(c.writings),
   };
 }
 function cleanContent(c) {
   return {
+    _v: CONTENT_VERSION,
     hero: c.hero,
     about: c.about,
     contact: c.contact,
     experience: stripKeys(c.experience),
-    stack: stripKeys(c.stack),
     projects: stripKeys(c.projects),
     writings: stripKeys(c.writings),
   };
@@ -200,101 +201,100 @@ export default function Admin() {
 
       <main className="mx-auto flex max-w-[1100px] flex-col gap-7 px-[clamp(16px,4vw,40px)] pt-7">
         {/* HERO */}
-        <Panel title="Hero" desc="The landing section — portrait image, headline and intro.">
+        <Panel title="Hero" desc="The landing section — portrait, name, role and tagline.">
           <div className="grid grid-cols-2 gap-4 max-[760px]:grid-cols-1">
-            <ImageField label="Portrait image" value={content.hero.image} onChange={(v) => setHero('image', v)} adminKey={key} />
-            <TextField label="Badge" value={content.hero.badge} onChange={(v) => setHero('badge', v)} />
-            <TextField label="Title — line 1" value={content.hero.titleLine1} onChange={(v) => setHero('titleLine1', v)} />
-            <TextField label="Title — accent" value={content.hero.titleAccent} onChange={(v) => setHero('titleAccent', v)} />
-            <TextField label="Title — line 2" value={content.hero.titleLine2} onChange={(v) => setHero('titleLine2', v)} />
+            <ImageField label="Portrait (black & white, white background)" value={content.hero.portrait} onChange={(v) => setHero('portrait', v)} adminKey={key} />
+            <TextField label="Availability status" value={content.hero.status} onChange={(v) => setHero('status', v)} />
+            <TextField label="First name (outlined)" value={content.hero.firstName} onChange={(v) => setHero('firstName', v)} />
+            <TextField label="Last name (solid)" value={content.hero.lastName} onChange={(v) => setHero('lastName', v)} />
+            <TextField label="Role" value={content.hero.role} onChange={(v) => setHero('role', v)} />
           </div>
           <div className="mt-4">
-            <TextArea label="Intro paragraph" value={content.hero.intro} onChange={(v) => setHero('intro', v)} rows={3} />
+            <TextArea label="Tagline" value={content.hero.tagline} onChange={(v) => setHero('tagline', v)} rows={3} />
           </div>
           <PreviewBox>
-            <div className="flex h-[560px] w-full flex-col">
-              <Hero go={noop} hero={content.hero} />
-            </div>
+            <Hero hero={content.hero} contact={content.contact} onContact={noop} />
           </PreviewBox>
         </Panel>
 
         {/* ABOUT */}
-        <Panel title="About" desc="Intro paragraph and the bullet points beside the whoami window.">
-          <TextArea label="Intro paragraph" value={content.about.intro} onChange={(v) => setAbout('intro', v)} rows={4} />
+        <Panel title="About" desc="The statement paragraph and the headline numbers under it.">
+          <TextArea label="Statement" value={content.about.intro} onChange={(v) => setAbout('intro', v)} rows={4} />
           <div className="mt-4">
-            <span className={labelCls}>Bullet points</span>
+            <span className={labelCls}>Stats</span>
             <div className="mt-1.5">
               <ListEditor
-                items={content.about.bullets}
-                onChange={(v) => setAbout('bullets', v)}
-                makeNew={() => 'New point'}
-                addLabel="Add bullet"
+                items={content.about.stats || []}
+                onChange={(v) => setAbout('stats', v)}
+                makeNew={() => ({ value: '10+', label: 'Something worth counting' })}
+                addLabel="Add stat"
                 render={(it, setIt) => (
-                  <input className={inputCls} value={it} onChange={(e) => setIt(e.target.value)} />
+                  <div className="grid grid-cols-[120px_1fr] gap-3">
+                    <TextField label="Value" value={it.value} onChange={(v) => setIt({ ...it, value: v })} />
+                    <TextField label="Label" value={it.label} onChange={(v) => setIt({ ...it, label: v })} />
+                  </div>
                 )}
               />
             </div>
           </div>
-          <PreviewBox><About go={noop} about={content.about} /></PreviewBox>
+          <PreviewBox><About about={content.about} /></PreviewBox>
         </Panel>
 
         {/* EXPERIENCE */}
-        <Panel title="Experience" desc="Cards shown on the About page. The first card is highlighted.">
+        <Panel title="Experience" desc="Rows in the dark Experience section, newest first.">
           <ListEditor
             items={content.experience}
             onChange={(v) => set('experience', v)}
-            makeNew={() => ({ _k: nk(), title: 'NEW ROLE', org: 'Company · Year', copy: 'What you did there.' })}
+            makeNew={() => ({ _k: nk(), org: 'Company', title: 'Role', period: '2026 — Now', copy: 'What you did there.', tools: [] })}
             addLabel="Add experience"
             render={(it, setIt) => (
               <div className="flex flex-col gap-3">
-                <TextField label="Title" value={it.title} onChange={(v) => setIt({ ...it, title: v })} />
-                <TextField label="Org · when" value={it.org} onChange={(v) => setIt({ ...it, org: v })} />
-                <TextArea label="Copy" value={it.copy} onChange={(v) => setIt({ ...it, copy: v })} rows={2} />
+                <div className="grid grid-cols-3 gap-3 max-[600px]:grid-cols-1">
+                  <TextField label="Company / school" value={it.org} onChange={(v) => setIt({ ...it, org: v })} />
+                  <TextField label="Role / degree" value={it.title} onChange={(v) => setIt({ ...it, title: v })} />
+                  <TextField label="Period" value={it.period} onChange={(v) => setIt({ ...it, period: v })} />
+                </div>
+                <TextArea label="Summary (hover card)" value={it.copy} onChange={(v) => setIt({ ...it, copy: v })} rows={2} />
+                <ChipsField label="Tools" value={it.tools} onChange={(v) => setIt({ ...it, tools: v })} hint={TOOL_HINT} />
               </div>
             )}
           />
           <PreviewBox><Experience items={content.experience} /></PreviewBox>
         </Panel>
 
-        {/* STACK */}
-        <Panel title="Stack" desc="Toolkit cards. Pick an icon and accent colour for each.">
-          <ListEditor
-            items={content.stack}
-            onChange={(v) => set('stack', v)}
-            makeNew={() => ({ _k: nk(), title: 'NEW SET', desc: 'Short description.', color: 'var(--color-blue)', icon: 'IconCode', chips: ['Tool'] })}
-            addLabel="Add stack set"
-            render={(it, setIt) => (
-              <div className="flex flex-col gap-3">
-                <TextField label="Title" value={it.title} onChange={(v) => setIt({ ...it, title: v })} />
-                <TextArea label="Description" value={it.desc} onChange={(v) => setIt({ ...it, desc: v })} rows={2} />
-                <div className="grid grid-cols-2 gap-3">
-                  <SelectField label="Icon" value={it.icon} onChange={(v) => setIt({ ...it, icon: v })} options={ICON_NAMES} />
-                  <SelectField label="Colour" value={it.color} onChange={(v) => setIt({ ...it, color: v })} options={PALETTE} />
-                </div>
-                <ChipsField label="Chips" value={it.chips} onChange={(v) => setIt({ ...it, chips: v })} />
-              </div>
-            )}
-          />
-          <PreviewBox><Stack items={content.stack} /></PreviewBox>
-        </Panel>
-
         {/* PROJECTS */}
-        <Panel title="Projects / Work" desc="The project cards shown on the Work page (and Home).">
+        <Panel title="Projects / Work" desc="Selected Work cards and their case-study pages.">
           <ListEditor
             items={content.projects}
             onChange={(v) => set('projects', v)}
-            makeNew={() => ({ _k: nk(), title: 'NEW PROJECT', desc: 'What it does.', color: 'var(--color-coral)', icon: 'IconAi', chips: ['Tag'], link: '' })}
+            makeNew={() => ({ _k: nk(), slug: 'project-' + nk(), title: 'New Project', kind: 'Side Project', tags: ['Tag'], desc: 'What it does.', role: '', timeline: '2026', team: '', tools: [], points: [], color: PALETTE[0].value, image: '', link: '' })}
             addLabel="Add project"
             render={(it, setIt) => (
               <div className="flex flex-col gap-3">
-                <TextField label="Title" value={it.title} onChange={(v) => setIt({ ...it, title: v })} />
-                <TextArea label="Description" value={it.desc} onChange={(v) => setIt({ ...it, desc: v })} rows={2} />
-                <div className="grid grid-cols-2 gap-3">
-                  <SelectField label="Icon" value={it.icon} onChange={(v) => setIt({ ...it, icon: v })} options={ICON_NAMES} />
-                  <SelectField label="Colour" value={it.color} onChange={(v) => setIt({ ...it, color: v })} options={PALETTE} />
+                <div className="grid grid-cols-2 gap-3 max-[600px]:grid-cols-1">
+                  <TextField label="Title" value={it.title} onChange={(v) => setIt({ ...it, title: v })} />
+                  <TextField label="URL slug" value={it.slug} onChange={(v) => setIt({ ...it, slug: v })} hint="used in the link: #/work/slug" />
+                  <TextField label="Kind" value={it.kind} onChange={(v) => setIt({ ...it, kind: v })} placeholder="Real Project" />
+                  <TextField label="Timeline" value={it.timeline} onChange={(v) => setIt({ ...it, timeline: v })} />
+                  <TextField label="Role" value={it.role} onChange={(v) => setIt({ ...it, role: v })} />
+                  <TextField label="Team" value={it.team} onChange={(v) => setIt({ ...it, team: v })} />
                 </div>
-                <TextField label="Link (URL)" value={it.link} onChange={(v) => setIt({ ...it, link: v })} placeholder="https://github.com/…" />
-                <ChipsField label="Chips" value={it.chips} onChange={(v) => setIt({ ...it, chips: v })} />
+                <TextArea label="Description" value={it.desc} onChange={(v) => setIt({ ...it, desc: v })} rows={2} />
+                <ChipsField label="Tags" value={it.tags} onChange={(v) => setIt({ ...it, tags: v })} />
+                <ChipsField label="Tools" value={it.tools} onChange={(v) => setIt({ ...it, tools: v })} hint={TOOL_HINT} />
+                <span className={labelCls}>Responsibilities (case-study list)</span>
+                <ListEditor
+                  items={it.points || []}
+                  onChange={(v) => setIt({ ...it, points: v })}
+                  makeNew={() => 'What you did'}
+                  addLabel="Add responsibility"
+                  render={(pt, setPt) => <input className={inputCls} value={pt} onChange={(e) => setPt(e.target.value)} />}
+                />
+                <div className="grid grid-cols-2 gap-3 max-[600px]:grid-cols-1">
+                  <SelectField label="Cover glow colour" value={it.color} onChange={(v) => setIt({ ...it, color: v })} options={PALETTE} />
+                  <TextField label="Link (URL)" value={it.link} onChange={(v) => setIt({ ...it, link: v })} placeholder="https://…" />
+                </div>
+                <ImageField label="Cover image (optional — replaces the generated cover)" value={it.image} onChange={(v) => setIt({ ...it, image: v })} adminKey={key} />
               </div>
             )}
           />
@@ -321,7 +321,7 @@ export default function Admin() {
               </div>
             )}
           />
-          <PreviewBox><Writing go={noop} onOpen={noop} items={content.writings} /></PreviewBox>
+          <PreviewBox><Writing onOpen={noop} items={content.writings} /></PreviewBox>
         </Panel>
 
         {/* CONTACT */}
@@ -343,7 +343,7 @@ export default function Admin() {
               hint="upload a new résumé PDF, or paste a URL — powers the Download PDF button on the résumé page"
             />
           </div>
-          <PreviewBox><Footer go={noop} contact={content.contact} /></PreviewBox>
+          <PreviewBox><Footer contact={content.contact} /></PreviewBox>
         </Panel>
       </main>
     </div>

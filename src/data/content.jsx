@@ -1,141 +1,206 @@
-import React from 'react';
-import { IconHeart, IconStar, IconDiamond } from '../components/ui/Icons.jsx';
-
 /* ============================================================
-   ABHINAY_MA — retro-pixel portfolio · shared content
-   These are the STATIC DEFAULTS. The admin (/admin) can override
-   the editable slices, which are merged over `defaultContent`
-   at runtime by the content provider.
+   Abhinay Marripelli — portfolio · shared content
+   These are the STATIC DEFAULTS (sourced from the résumé). The admin
+   (/admin) can override the editable slices, which are merged over
+   `defaultContent` at runtime by the content provider.
    ============================================================ */
+
+/* Bump when the shape/meaning of the editable content changes. Saved admin
+   overrides from an older version are ignored until the admin saves again,
+   so fresh defaults are never hidden behind stale data. */
+export const CONTENT_VERSION = 2;
 
 export const RESUME_URL = '/resume/Abhinay_Resume.pdf';
 export const GAME_URL = 'https://games.abhinay.online'; // egg-catcher is deployed separately
 export const GITHUB_URL = 'https://github.com/ABHINAY2025';
 export const FISEC_URL = 'https://fisecglobal.net/';
 export const EMAIL = 'abhinayabhi2025@gmail.com';
-export const PHONE = '+91 7989406762';
+export const PHONE = '+91 8500851081';
 export const LINKEDIN_URL = 'https://linkedin.com/in/abhinay-ma';
 
-export const TABS = [
-  ['home', 'Home'],
-  ['about', 'About'],
-  ['work', 'Work'],
-  ['stack', 'Stack'],
-  ['game', 'Game'],
-  ['writing', 'Writing'],
-];
-
-/* colour options offered in the admin colour pickers */
+/* colour options offered in the admin colour pickers (project cover glow) */
 export const PALETTE = [
-  { label: 'Blue', value: 'var(--color-blue)' },
-  { label: 'Coral', value: 'var(--color-coral)' },
-  { label: 'Green', value: 'var(--color-green)' },
-  { label: 'Yellow', value: 'var(--color-yellow)' },
-  { label: 'Purple', value: 'var(--color-purple)' },
-  { label: 'Purple deep', value: 'var(--color-purple-deep)' },
-  { label: 'Coral sunset', value: 'var(--color-coral-sunset)' },
-  { label: 'Blue deep', value: 'var(--color-blue-deep)' },
+  { label: 'Blue', value: '#3b82f6' },
+  { label: 'Violet', value: '#8b5cf6' },
+  { label: 'Emerald', value: '#10b981' },
+  { label: 'Amber', value: '#f59e0b' },
+  { label: 'Rose', value: '#f43f5e' },
+  { label: 'Cyan', value: '#06b6d4' },
+  { label: 'Orange', value: '#f97316' },
+  { label: 'Slate', value: '#94a3b8' },
 ];
 
 const hero = {
-  image: '', // empty → use the bundled default portrait
-  badge: '★ FULL-STACK DEVELOPER ✦ AI ENTHUSIAST',
-  titleLine1: 'ABHINAY',
-  titleAccent: '_MA.',
-  titleLine2: 'BUILD.',
-  intro:
-    'I build for community and uncover stories through code & design — from microservice ' +
-    'backends to AR experiments and AI agents. Currently shipping backends at FISEC Global.',
+  portrait: '', // empty → use the bundled black & white portrait
+  status: 'Available for new opportunities',
+  firstName: 'ABHINAY',
+  lastName: 'MARRIPELLI',
+  role: 'Full Stack & DevOps Engineer',
+  tagline:
+    'Building and operating banking-grade platforms end to end — Spring Boot microservices, ' +
+    'React micro-frontends and the cloud chain that ships them.',
 };
 
 const about = {
   intro:
-    'Growing up surrounded by creativity fuelled my curiosity about how communities shape ' +
-    'everyday experiences. From tech to design, filmmaking and psychology — every skill led ' +
-    'me toward building meaningful, human-centred digital products.',
-  bullets: [
-    'Specialise in emerging tech & full-stack development',
-    'Backend at FISEC Global — Java + microservices',
-    'Obsessed with tools that feel effortless',
-    'Creative problem solver, perpetual learner',
+    'I build the pipelines that ship software and the monitoring that keeps it honest — CI/CD that takes ' +
+    'every merge from commit to production, Kubernetes and AWS infrastructure that scales with the load, ' +
+    'and logging and alerting that catch problems before users do. Underneath it all: microservices and ' +
+    'front ends designed to stay fast and reliable at scale.',
+  stats: [
+    { value: '1.2+', label: 'Years in production engineering' },
+    { value: '5', label: 'Environments in every release pipeline' },
+    { value: '2', label: 'Live platforms monitored with ELK' },
+    { value: '40+', label: 'Service APIs shipped' },
   ],
 };
 
-export const projects = [
+export const services = [
   {
-    num: '01', color: 'var(--color-blue)', title: 'AR STRUCTURE VIEWER', icon: 'IconAi',
-    desc: 'View famous monuments like the Taj Mahal in your real surroundings using AI-driven AR. Place, scale and walk around 3D heritage models in the browser.',
-    chips: ['AR', 'AI', '3D', 'WebXR', '2025'], link: GITHUB_URL,
+    title: 'Full-Stack Development',
+    desc: 'Features owned from domain model and API design through React UI, tests, release and production support.',
   },
   {
-    num: '02', color: 'var(--color-coral)', title: 'SMART INVOICE MAKER', icon: 'IconData',
-    desc: 'Create professional invoices with auto-calculations, tax handling and one-click PDF export. A full-stack fintech tool built for small studios.',
-    chips: ['FULL-STACK', 'FINTECH', 'PDF', '2024'], link: GITHUB_URL,
+    title: 'Microservices & APIs',
+    desc: 'Spring Boot services, RESTful APIs, Kafka event streams and SSE / WebSocket real-time delivery.',
   },
   {
-    num: '03', color: 'var(--color-green)', title: 'BOLT — RUN TRACKER', icon: 'IconMobile',
-    desc: 'A Strava-style running tracker. Express + Firestore backend with JWT auth, live GPS routes, splits and a clean snake_case wire contract.',
-    chips: ['EXPRESS', 'FIRESTORE', 'JWT', 'MAPS'], link: GITHUB_URL,
+    title: 'DevOps & Cloud',
+    desc: 'AWS infrastructure, Kubernetes + Helm, Terraform, Ansible and Jenkins CI/CD pipelines that ship without drama.',
+  },
+  {
+    title: 'Real-time Frontends',
+    desc: 'Module-federated React micro-frontends, live operator dashboards and shared design-token theming.',
   },
 ];
 
-export const stack = [
+export const projects = [
   {
-    num: '01', color: 'var(--color-blue)', title: 'FRONTEND', icon: 'IconCode',
-    desc: 'Pixel-precise, accessible interfaces with motion that feels alive.',
-    chips: ['React', 'Vite', 'Tailwind', 'Framer Motion', 'GSAP'],
+    slug: 'qdl',
+    title: 'QDL — Quantum Data Leap',
+    kind: 'Real Project',
+    tags: ['Decision Intelligence', 'FISEC Global'],
+    desc:
+      'An AI-powered decision intelligence platform that helps organisations turn complex financial and ' +
+      'operational data into clear, actionable insights.',
+    role: 'Full-Stack & DevOps Engineer',
+    timeline: '2025 — Now',
+    team: '7 engineers',
+    tools: ['java', 'spring', 'react', 'kubernetes', 'helm', 'terraform', 'aws', 'jenkins', 'claude'],
+    points: [
+      'Built and maintained Java / Spring Boot microservices and React front ends.',
+      'Handled build and deployment across QA, UAT, E2E, Staging and Production.',
+      'Created and maintained Helm charts for Kubernetes-based deployments.',
+      'Managed CI/CD with Jenkins, Git, SonarQube, Maven and JFrog.',
+      'Provisioned infrastructure with Terraform and configured it with Ansible.',
+      'Centralised logging and production analysis with ELK / Kibana, plus RCA write-ups.',
+    ],
+    color: '#8b5cf6',
+    link: '',
   },
   {
-    num: '02', color: 'var(--color-green)', title: 'BACKEND', icon: 'IconServer',
-    desc: 'Microservices, REST APIs and queue-driven workers that hold up under load.',
-    chips: ['Java', 'Node.js', 'Express', 'FastAPI', 'Flask'],
+    slug: 'willingly',
+    title: 'Willingly — Donation & NGO Fundraising',
+    kind: 'Real Project',
+    tags: ['Fundraising', 'FISEC Global'],
+    desc:
+      'A donation and NGO fundraising platform that lets NGOs run campaigns and donors contribute to and ' +
+      'track their donations.',
+    role: 'DevOps Engineer',
+    timeline: '2025',
+    team: '6 engineers',
+    tools: ['kubernetes', 'helm', 'aws', 'ansible', 'jenkins', 'sonarqube', 'maven', 'elasticsearch'],
+    points: [
+      'Deployed Java microservices on AWS EKS with Kubernetes and Helm charts.',
+      'Ran build and release across QA, UAT, Staging and Production.',
+      'Automated Windows on-prem deployments and server config with Ansible playbooks.',
+      'Monitored health, performance and logs with ELK and Kibana.',
+      'Supported production incidents and documented RCAs for recurring issues.',
+    ],
+    color: '#10b981',
+    link: '',
   },
   {
-    num: '03', color: 'var(--color-coral)', title: 'DATA', icon: 'IconData',
-    desc: 'The right store for the job — relational, document or realtime.',
-    chips: ['Postgres', 'MongoDB', 'Firestore', 'Redis'],
+    slug: 'bolt',
+    title: 'Bolt — Run Tracker',
+    kind: 'Side Project',
+    tags: ['Mobile', 'Full-Stack'],
+    desc:
+      'A Strava-style running tracker. Express + Firestore backend with JWT auth, live GPS routes, splits and a ' +
+      'clean snake_case wire contract.',
+    role: 'Solo build',
+    timeline: '2025',
+    team: '',
+    tools: ['react', 'nodejs', 'express', 'firebase'],
+    points: [],
+    color: '#f97316',
+    link: GITHUB_URL,
   },
   {
-    num: '04', color: 'var(--color-yellow)', title: 'AI / ML', icon: 'IconAi',
-    desc: 'Agents, RAG and LLM features wired into real products.',
-    chips: ['Claude API', 'Groq', 'LangChain', 'pgvector'],
-  },
-  {
-    num: '05', color: 'var(--color-purple)', title: 'CLOUD', icon: 'IconCloud',
-    desc: 'Containerised, observable deploys that ship without drama.',
-    chips: ['Docker', 'Vercel', 'Firebase', 'GitHub Actions'],
-  },
-  {
-    num: '06', color: 'var(--color-purple-deep)', title: 'CRAFT', icon: 'IconDiamond',
-    desc: 'The details — performance, DX and design systems that scale.',
-    chips: ['TypeScript', 'Git', 'Figma', 'Testing'],
+    slug: 'smart-invoice',
+    title: 'Smart Invoice Maker',
+    kind: 'Side Project',
+    tags: ['Fintech', 'Full-Stack'],
+    desc:
+      'Professional invoices with auto-calculations, tax handling and one-click PDF export — a full-stack tool ' +
+      'built for small studios.',
+    role: 'Solo build',
+    timeline: '2024',
+    team: '',
+    tools: ['react', 'nodejs', 'mongodb'],
+    points: [],
+    highlight: { value: '1-click', label: 'PDF invoices, auto tax.' },
+    color: '#f59e0b',
+    link: GITHUB_URL,
   },
 ];
 
 export const experience = [
   {
-    n: '01', title: 'BACKEND DEVELOPER', org: 'FISEC Global · Current',
-    copy: 'Java + microservices backend — scalable APIs, service-to-service communication and enterprise-grade reliability.',
+    org: 'FISEC Global',
+    title: 'Software Engineer — Full Stack & DevOps',
+    period: 'Jul 2025 — Now',
+    copy: 'CI/CD pipelines, Kubernetes and AWS infrastructure and ELK monitoring — plus the Spring Boot microservices and React micro-frontends they ship.',
+    tools: ['java', 'spring', 'react', 'kafka', 'kubernetes', 'aws'],
   },
   {
-    n: '02', title: 'PROJECT MANAGEMENT SIM', org: 'Accenture N.A. · Forage',
-    copy: 'Ran a new brand launch as PM, mapping Plan-Driven, Agile, Scaled Agile and Hybrid methodologies across a portfolio.',
+    org: 'Vignana Bharathi Institute of Technology',
+    title: 'B.Tech, Information Technology · CGPA 7.65',
+    period: '2022 — 2025',
+    copy: 'Undergraduate degree in IT, Hyderabad.',
+    tools: ['java', 'python', 'javascript'],
   },
   {
-    n: '03', title: 'WEB DEVELOPMENT INTERN', org: 'Motion Cut',
-    copy: 'Built responsive interfaces in HTML, CSS and JS with dynamic content updates and improved cross-device UI performance.',
+    org: 'Motion Cut',
+    title: 'Web Development Intern',
+    period: 'Internship',
+    copy: 'Responsive interfaces in HTML, CSS and JS with dynamic content updates and better cross-device performance.',
+    tools: ['html5', 'css3', 'javascript'],
   },
   {
-    n: '04', title: 'SOFTWARE ENGINEERING VX', org: 'J.P. Morgan Chase · Forage',
-    copy: 'Fixed repo files, set up a local dev environment and used JPMorgan’s Perspective library for live trader data viz.',
+    org: 'J.P. Morgan Chase · Forage',
+    title: 'Software Engineering Virtual Experience',
+    period: 'Virtual',
+    copy: 'Set up a local dev environment and used the Perspective library for live trader data visualisation.',
+    tools: ['python', 'react'],
   },
   {
-    n: '05', title: 'MODEL CONTEXT PROTOCOL', org: 'Anthropic · Certified',
-    copy: 'Completed Anthropic’s “Introduction to Model Context Protocol” — connecting models to real tools, APIs and applications beyond prompts.',
+    org: 'Kshatriya College of Engineering',
+    title: 'Diploma, Civil Engineering · GPA 7.48',
+    period: '2019 — 2022',
+    copy: 'Where the engineering habit started.',
+    tools: [],
   },
 ];
 
-/* Writings are a list now (the admin can add more). `body` uses a tiny
+export const certifications = [
+  { name: 'Model Context Protocol (MCP)', by: 'Anthropic' },
+  { name: 'Java Full Stack — TalentNext', by: 'Wipro' },
+  { name: 'Software Engineering Virtual Experience', by: 'J.P. Morgan · Forage' },
+  { name: 'Introduction to MongoDB', by: 'MongoDB University' },
+];
+
+/* Writings are a list (the admin can add more). `body` uses a tiny
    markdown-lite: blank-line blocks, "## " heading, "> " quote, "- " bullet,
    and **bold** inline. Rendered by the Article page. */
 export const writings = [
@@ -179,27 +244,7 @@ export const defaultContent = {
   hero,
   about,
   experience,
-  stack,
   projects,
   writings,
   contact,
 };
-
-/* values stay static (not exposed in the admin) */
-export const values = [
-  {
-    icon: <IconStar />, title: 'Always stay learning.',
-    copy: 'Every skill — tech, design, film, psychology — feeds the next build.',
-    avatar: 'bg-yellow text-ink',
-  },
-  {
-    icon: <IconHeart />, title: 'Build for people, not pixels.',
-    copy: 'Empathise deeply. The product is the experience, not the codebase.',
-    avatar: 'bg-coral text-ink',
-  },
-  {
-    icon: <IconDiamond />, title: 'Move with intention.',
-    copy: 'Navigate every day on purpose — small, deliberate, compounding work.',
-    avatar: 'bg-purple text-ink',
-  },
-];

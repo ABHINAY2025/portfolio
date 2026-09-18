@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import Controller from './components/widgets/Controller.jsx';
 import Admin from './components/admin/Admin.jsx';
+import CustomCursor from './components/widgets/CustomCursor.jsx';
+import PocketPlayer from './components/widgets/PocketPlayer.jsx';
 import { SoundProvider } from './components/widgets/SoundProvider.jsx';
 import { ContentProvider } from './data/content-context.jsx';
 import './index.css';
@@ -21,6 +23,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ContentProvider>
         <SoundProvider>
           <App />
+          <PocketPlayer />
+          <CustomCursor />
         </SoundProvider>
       </ContentProvider>
     )}

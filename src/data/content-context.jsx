@@ -1,21 +1,22 @@
 import React from 'react';
-import { defaultContent } from './content.jsx';
+import { defaultContent, CONTENT_VERSION } from './content.jsx';
 
 /* Merges the admin's saved overrides over the static defaults and exposes
    the effective content tree. Sections read their slice from here (via App),
-   so admin edits go live on the public site. */
+   so admin edits go live on the public site. Overrides saved under an older
+   CONTENT_VERSION are ignored (their shape predates the current defaults). */
 
 const ContentCtx = React.createContext(null);
 
 export function mergeContent(overrides) {
-  const o = overrides || {};
+  const o = overrides && overrides._v === CONTENT_VERSION ? overrides : {};
   const arr = (v, d) => (Array.isArray(v) && v.length ? v : d);
   return {
+    _v: CONTENT_VERSION,
     hero: { ...defaultContent.hero, ...(o.hero || {}) },
     about: { ...defaultContent.about, ...(o.about || {}) },
     contact: { ...defaultContent.contact, ...(o.contact || {}) },
     experience: arr(o.experience, defaultContent.experience),
-    stack: arr(o.stack, defaultContent.stack),
     projects: arr(o.projects, defaultContent.projects),
     writings: arr(o.writings, defaultContent.writings),
   };

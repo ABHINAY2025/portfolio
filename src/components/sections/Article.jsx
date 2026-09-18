@@ -1,23 +1,17 @@
 import React from 'react';
-import Eyebrow from '../ui/Eyebrow.jsx';
-import Button from '../ui/Button.jsx';
+import { Container, Pill, ArrowLeft } from '../ui/site.jsx';
 import { defaultContent } from '../../data/content.jsx';
 
 /* Renders a single writing. Body uses a tiny markdown-lite:
    blank-line-separated blocks, "## " heading, "> " quote, "- " bullets,
    and **bold** inline. */
 
-const dottedBg = {
-  background:
-    'radial-gradient(rgba(26,21,48,0.05) 1px, transparent 1px) 0 0 / 18px 18px, var(--color-cream-2)',
-};
-
 function inline(text) {
   return String(text)
     .split(/\*\*(.+?)\*\*/g)
     .map((part, i) =>
       i % 2 === 1
-        ? <strong key={i} className="text-coral-sunset">{part}</strong>
+        ? <strong key={i} className="font-semibold text-carbon">{part}</strong>
         : <React.Fragment key={i}>{part}</React.Fragment>,
     );
 }
@@ -27,7 +21,7 @@ function renderBody(body) {
   return blocks.map((block, i) => {
     if (block.startsWith('## ')) {
       return (
-        <h2 key={i} className="mb-4 mt-12 border-l-[6px] border-blue pl-3.5 font-pixel text-[clamp(13px,2vw,16px)] leading-[1.5]">
+        <h2 key={i} className="mb-5 mt-14 text-[clamp(24px,2.6vw,32px)] font-semibold tracking-[-0.02em]">
           {inline(block.slice(3))}
         </h2>
       );
@@ -35,7 +29,7 @@ function renderBody(body) {
     if (block.startsWith('> ')) {
       const text = block.split('\n').map((l) => l.replace(/^>\s?/, '')).join(' ');
       return (
-        <blockquote key={i} className="my-7 border-[3px] border-ink bg-cream p-[18px_20px] font-mono text-base shadow-pixel">
+        <blockquote key={i} className="my-10 border-l-2 border-carbon pl-6 text-[clamp(20px,2.2vw,26px)] font-medium leading-snug tracking-[-0.01em]">
           {inline(text)}
         </blockquote>
       );
@@ -43,62 +37,48 @@ function renderBody(body) {
     const lines = block.split('\n');
     if (lines.every((l) => l.startsWith('- '))) {
       return (
-        <ul key={i} className="mb-[18px] flex flex-col gap-3">
+        <ul key={i} className="mb-6 flex flex-col gap-3">
           {lines.map((l, j) => (
-            <li key={j} className="flex items-start gap-3 font-mono text-[15.5px] leading-[1.6]">
-              <span aria-hidden="true" className="font-bold text-coral-deep">▸</span> {inline(l.slice(2))}
+            <li key={j} className="flex items-start gap-3 text-[17px] leading-relaxed text-carbon/75">
+              <span aria-hidden="true" className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-carbon" /> {inline(l.slice(2))}
             </li>
           ))}
         </ul>
       );
     }
     return (
-      <p key={i} className="mb-[18px] font-mono text-base leading-[1.7] text-ink-soft">
+      <p key={i} className="mb-6 text-[17px] leading-[1.8] text-carbon/75">
         {inline(block)}
       </p>
     );
   });
 }
 
-export default function Article({ go, writing }) {
+export default function Article({ writing, onBack }) {
   const w = writing || defaultContent.writings[0];
-
   return (
-    <article className="py-[clamp(40px,6vw,72px)]" style={dottedBg}>
-      <div className="mx-auto w-full max-w-[760px] px-[clamp(20px,5vw,40px)]">
-        <button
-          type="button"
-          onClick={() => go('writing')}
-          className="mb-9 inline-flex items-center gap-2 border-2 border-ink bg-cream px-2.5 py-1.5 font-pixel text-[9px] tracking-[0.08em] text-ink shadow-pixel-sm transition hover:-translate-x-px hover:-translate-y-px hover:bg-yellow"
-        >
-          ← BACK TO WRITING
-        </button>
-
-        <Eyebrow className="text-coral-sunset">▸ FROM THE JOURNAL · {w.date}</Eyebrow>
-        <h1 className="mb-[18px] mt-[18px] font-pixel text-[clamp(20px,3.6vw,30px)] leading-[1.4]">
-          {w.title}
-        </h1>
-
-        <div className="mb-9 flex flex-wrap gap-2.5">
-          <span className="border-[3px] border-ink bg-yellow px-2.5 py-2 font-pixel text-[9px] tracking-[0.06em] shadow-pixel-sm">
-            ▸ {w.read}
-          </span>
-          {w.tag && (
-            <span className="border-[3px] border-ink bg-cream px-2.5 py-2 font-pixel text-[9px] tracking-[0.06em] shadow-pixel-sm">
-              {w.tag}
-            </span>
-          )}
+    <article className="site min-h-screen bg-white pb-28 pt-24">
+      <Container max="max-w-[820px]">
+        <div className="mb-14">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex items-center gap-2 rounded-full border border-carbon/10 bg-white px-3.5 py-1.5 text-[13px] font-medium transition hover:border-carbon"
+          >
+            <ArrowLeft /> Back
+          </button>
         </div>
-
-        {renderBody(w.body)}
-
-        <hr className="my-12 border-0 border-t-[3px] border-dashed border-ink/25" />
-
-        <div className="mt-2 flex flex-wrap gap-3.5">
-          <Button variant="coral" onClick={() => go('writing')}>← Back to writing</Button>
-          <Button variant="ghost" onClick={() => go('contact')}>Get in touch</Button>
+        <div className="anim-fade-up">
+          <div className="flex flex-wrap gap-3 text-[13px] text-smoke">
+            <span>{w.date}</span><span>·</span><span>{w.read}</span><span>·</span><span>{w.tag}</span>
+          </div>
+          <h1 className="mb-12 mt-5 text-[clamp(34px,5vw,64px)] font-semibold leading-[1.02] tracking-[-0.035em]">{w.title}</h1>
+          {renderBody(w.body)}
+          <div className="mt-16 flex flex-wrap gap-3 border-t border-carbon/10 pt-10">
+            <Pill onClick={onBack} icon={false}>More from the portfolio</Pill>
+          </div>
         </div>
-      </div>
+      </Container>
     </article>
   );
 }

@@ -61,10 +61,21 @@ export default function ProjectDetail({ project, projects, onBack, onOpen, onCon
           <ProjectCover project={project} large />
         </Reveal>
 
+        {project.overview && (
+          <section className="mt-[clamp(64px,8vw,110px)] grid grid-cols-[300px_1fr] gap-12 max-md:grid-cols-1 max-md:gap-6">
+            <Reveal as="h2" className="text-[clamp(26px,3vw,40px)] font-medium uppercase">
+              <span className="text-carbon/35">/</span>OVERVIEW
+            </Reveal>
+            <Reveal as="p" delay={80} className="max-w-[720px] text-[clamp(18px,1.6vw,22px)] leading-[1.6] text-carbon/80">
+              {project.overview}
+            </Reveal>
+          </section>
+        )}
+
         {project.points?.length > 0 && (
           <section className="mt-[clamp(64px,8vw,110px)] grid grid-cols-[300px_1fr] gap-12 max-md:grid-cols-1 max-md:gap-6">
             <Reveal as="h2" className="text-[clamp(26px,3vw,40px)] font-medium uppercase">
-              <span className="text-carbon/35">/</span>ROLE
+              <span className="text-carbon/35">/</span>WHAT I DID
             </Reveal>
             <ol className="border-t border-carbon/10">
               {project.points.map((p, i) => (

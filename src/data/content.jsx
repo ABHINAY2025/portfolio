@@ -8,7 +8,7 @@
 /* Bump when the shape/meaning of the editable content changes. Saved admin
    overrides from an older version are ignored until the admin saves again,
    so fresh defaults are never hidden behind stale data. */
-export const CONTENT_VERSION = 2;
+export const CONTENT_VERSION = 3;
 
 export const RESUME_URL = '/resume/Abhinay_Resume.pdf';
 export const GAME_URL = 'https://games.abhinay.online'; // egg-catcher is deployed separately
@@ -79,6 +79,12 @@ export const projects = [
     slug: 'qdl',
     title: 'QDL — Quantum Data Leap',
     kind: 'Real Project',
+    summary: 'AI decision intelligence for financial and operational data.',
+    overview:
+      'Quantum Data Leap is an AI-powered decision intelligence platform that turns complex financial and ' +
+      'operational data into clear, actionable insight. I work across the whole stack: the Spring Boot ' +
+      'microservices and React front ends, and the Kubernetes, Terraform and Jenkins delivery chain that ' +
+      'carries every change from QA through UAT, E2E and Staging into Production, with ELK watching it all.',
     tags: ['Decision Intelligence', 'FISEC Global'],
     desc:
       'An AI-powered decision intelligence platform that helps organisations turn complex financial and ' +
@@ -94,6 +100,7 @@ export const projects = [
       'Managed CI/CD with Jenkins, Git, SonarQube, Maven and JFrog.',
       'Provisioned infrastructure with Terraform and configured it with Ansible.',
       'Centralised logging and production analysis with ELK / Kibana, plus RCA write-ups.',
+      'Used Claude CLI to draft and refine Terraform and Helm configuration.',
     ],
     color: '#8b5cf6',
     link: '',
@@ -102,6 +109,12 @@ export const projects = [
     slug: 'willingly',
     title: 'Willingly — Donation & NGO Fundraising',
     kind: 'Real Project',
+    summary: 'Campaigns for NGOs, transparent giving for donors.',
+    overview:
+      'Willingly lets NGOs launch fundraising campaigns and lets donors give and follow where their money ' +
+      'goes. As the DevOps engineer on a six-person team I owned the path to production: Java microservices ' +
+      'on AWS EKS packaged with Helm, Jenkins pipelines gated by SonarQube, Ansible for the Windows servers ' +
+      'that still run on-premises, and ELK dashboards to keep an eye on it all.',
     tags: ['Fundraising', 'FISEC Global'],
     desc:
       'A donation and NGO fundraising platform that lets NGOs run campaigns and donors contribute to and ' +
@@ -124,6 +137,11 @@ export const projects = [
     slug: 'bolt',
     title: 'Bolt — Run Tracker',
     kind: 'Side Project',
+    summary: 'Strava-style run tracking with live GPS routes.',
+    overview:
+      'Bolt is a Strava-style running tracker I built end to end. Runs are recorded as live GPS routes with ' +
+      'splits, and an Express API backed by Firestore stores them behind JWT authentication. I kept the API ' +
+      'contract strict and predictable, with snake_case on the wire everywhere, so the client never has to guess.',
     tags: ['Mobile', 'Full-Stack'],
     desc:
       'A Strava-style running tracker. Express + Firestore backend with JWT auth, live GPS routes, splits and a ' +
@@ -132,7 +150,12 @@ export const projects = [
     timeline: '2025',
     team: '',
     tools: ['react', 'nodejs', 'express', 'firebase'],
-    points: [],
+    points: [
+      'Express + Firestore API with JWT-based authentication.',
+      'Live GPS route recording with per-split pacing.',
+      'A consistent snake_case wire contract between client and API.',
+      'React front end for logging runs and reviewing routes.',
+    ],
     color: '#f97316',
     link: GITHUB_URL,
   },
@@ -140,6 +163,11 @@ export const projects = [
     slug: 'smart-invoice',
     title: 'Smart Invoice Maker',
     kind: 'Side Project',
+    summary: 'Invoices with auto tax and one-click PDF export.',
+    overview:
+      'Smart Invoice Maker takes the busywork out of billing for small studios. Line items total themselves, ' +
+      'tax is worked out automatically, and a finished invoice exports to a clean PDF in one click, all on a ' +
+      'React front end backed by a Node.js API and MongoDB.',
     tags: ['Fintech', 'Full-Stack'],
     desc:
       'Professional invoices with auto-calculations, tax handling and one-click PDF export — a full-stack tool ' +
@@ -148,7 +176,12 @@ export const projects = [
     timeline: '2024',
     team: '',
     tools: ['react', 'nodejs', 'mongodb'],
-    points: [],
+    points: [
+      'Automatic line-item and total calculations.',
+      'Tax handling built into every invoice.',
+      'One-click export to a print-ready PDF.',
+      'React front end on a Node.js and MongoDB backend.',
+    ],
     highlight: { value: '1-click', label: 'PDF invoices, auto tax.' },
     color: '#f59e0b',
     link: GITHUB_URL,

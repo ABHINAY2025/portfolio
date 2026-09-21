@@ -179,6 +179,7 @@ function MediaTile({ project, onOpen }) {
           <div className="absolute bottom-6 left-6 right-6">
             <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-carbon/60">{project.kind || 'Project'}</div>
             <div className="mt-1 font-wide text-[clamp(38px,5vw,110px)] font-extrabold uppercase leading-none tracking-tight text-carbon">{short}</div>
+            {project.summary && <p className="mt-2 max-w-[420px] text-[clamp(13px,1vw,16px)] font-medium leading-snug text-carbon/70">{project.summary}</p>}
             <div className="mt-3 flex -space-x-2">
               {(project.tools || []).slice(0, 6).map((t) => (
                 <span key={t} className="grid h-9 w-9 place-items-center rounded-full border-2 border-white/60 bg-white">
@@ -217,6 +218,7 @@ function SlateTile({ project, onOpen }) {
         <path d="M16 27.5S4 20.2 4 11.8A6.3 6.3 0 0 1 16 8.4a6.3 6.3 0 0 1 12 3.4c0 8.4-12 15.7-12 15.7Z" fill="#fff" />
       </svg>
       <span className="text-[17px] font-medium">{short}</span>
+      {project.summary && <span className="max-w-[80%] text-center text-[12.5px] leading-snug text-white/65">{project.summary}</span>}
       <Corner light />
     </button>
   );
@@ -282,8 +284,9 @@ export default function Projects({ items = defaultContent.projects, onOpen = () 
                     {third && (
                       <button type="button" onClick={open(third)} data-cursor="open" aria-label={`Open ${third.title}`} className="group relative grid place-items-center" style={{ background: BENTO.ink }}>
                         <Sphere />
-                        <span className="absolute bottom-3 left-4 text-[12px] font-medium text-white/0 transition-colors duration-500 group-hover:text-white/80">
-                          {String(third.title).split(/\s+[—-]\s+/)[0]}
+                        <span className="absolute bottom-3 left-4 right-4 text-left">
+                          <span className="block text-[13px] font-semibold text-white/85">{String(third.title).split(/\s+[—-]\s+/)[0]}</span>
+                          {third.summary && <span className="mt-0.5 block text-[11.5px] leading-snug text-white/55">{third.summary}</span>}
                         </span>
                         <Corner light />
                       </button>

@@ -12,8 +12,8 @@ import React from 'react';
      back and stops the music; clicking the back flips it forward and plays.
    - The page's custom cursor steps aside here: the native cursor is used.
    - On the first screen it's the full device (bottom-right). Scroll past the
-     hero and it morphs into a small pill at the bottom centre (spinning CD +
-     play/pause); scroll back up and it morphs back. The morph: the source fades,
+     hero and it morphs into a small pill in the bottom-right corner (spinning
+     CD + play/pause); scroll back up and it morphs back. The morph: the source fades,
      a body-coloured shell glides and reshapes between the two, the target fades in.
    Music starts by itself: playback is attempted on load, and if the browser
    blocks sound until the visitor interacts, it starts on their first click,
@@ -661,7 +661,7 @@ export default function PocketPlayer({
       ref={pillBox}
       data-native-cursor
       aria-hidden={view !== 'pill'}
-      className={`site fixed bottom-5 left-1/2 z-[60] flex -translate-x-1/2 select-none items-center gap-3 rounded-full py-1.5 pl-1.5 pr-1.5 ${view === 'pill' ? '' : 'invisible pointer-events-none'}`}
+      className={`site fixed bottom-5 right-5 z-[60] flex select-none items-center gap-3 rounded-full py-1.5 pl-1.5 pr-1.5 max-sm:bottom-3 max-sm:right-3 ${view === 'pill' ? '' : 'invisible pointer-events-none'}`}
       style={{ background: BODY, boxShadow: `inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -2px 0 ${BODY_EDGE}, 0 18px 36px -14px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.12)` }}
     >
       <Platter spinning={playing} size={46} />

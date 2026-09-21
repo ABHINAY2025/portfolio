@@ -267,7 +267,7 @@ export default function Admin() {
           <ListEditor
             items={content.projects}
             onChange={(v) => set('projects', v)}
-            makeNew={() => ({ _k: nk(), slug: 'project-' + nk(), title: 'New Project', kind: 'Side Project', tags: ['Tag'], desc: 'What it does.', role: '', timeline: '2026', team: '', tools: [], points: [], color: PALETTE[0].value, image: '', link: '' })}
+            makeNew={() => ({ _k: nk(), slug: 'project-' + nk(), title: 'New Project', kind: 'Side Project', summary: '', overview: '', tags: ['Tag'], desc: 'What it does.', role: '', timeline: '2026', team: '', tools: [], points: [], color: PALETTE[0].value, image: '', link: '' })}
             addLabel="Add project"
             render={(it, setIt) => (
               <div className="flex flex-col gap-3">
@@ -280,6 +280,8 @@ export default function Admin() {
                   <TextField label="Team" value={it.team} onChange={(v) => setIt({ ...it, team: v })} />
                 </div>
                 <TextArea label="Description" value={it.desc} onChange={(v) => setIt({ ...it, desc: v })} rows={2} />
+                <TextField label="Tile summary (one line)" value={it.summary} onChange={(v) => setIt({ ...it, summary: v })} />
+                <TextArea label="Overview (case-study page)" value={it.overview} onChange={(v) => setIt({ ...it, overview: v })} rows={4} />
                 <ChipsField label="Tags" value={it.tags} onChange={(v) => setIt({ ...it, tags: v })} />
                 <ChipsField label="Tools" value={it.tools} onChange={(v) => setIt({ ...it, tools: v })} hint={TOOL_HINT} />
                 <span className={labelCls}>Responsibilities (case-study list)</span>

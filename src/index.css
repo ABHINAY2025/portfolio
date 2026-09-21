@@ -366,19 +366,6 @@ html.cc-on [data-native-cursor] :is(button, [role="slider"]) * { cursor: pointer
 /* pocket music player */
 @keyframes ppSpin { to { transform: rotate(360deg); } }
 
-/* footer name filled with the bat emblem texture, drifting slowly */
-@keyframes batDrift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
-.bat-text {
-  color: transparent;
-  background-repeat: repeat-x;
-  background-size: auto 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
-  animation: batDrift 40s ease-in-out infinite alternate;
-}
-@media (prefers-reduced-motion: reduce) { .bat-text { animation: none; } }
-
 /* hero first name: a live equalizer graph inside the hollow letters
    (bar heights come from PocketPlayer's --eq-N variables) */
 .eq-graph {

@@ -17,6 +17,7 @@ export function mergeContent(overrides) {
     about: { ...defaultContent.about, ...(o.about || {}) },
     contact: { ...defaultContent.contact, ...(o.contact || {}) },
     experience: arr(o.experience, defaultContent.experience),
+    updates: Array.isArray(o.updates) ? o.updates : defaultContent.updates,
     projects: arr(o.projects, defaultContent.projects),
     writings: arr(o.writings, defaultContent.writings),
   };

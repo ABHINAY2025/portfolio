@@ -8,6 +8,7 @@ import ProjectDetail from './components/sections/ProjectDetail.jsx';
 import Services from './components/sections/Services.jsx';
 import Skills from './components/sections/Skills.jsx';
 import Experience from './components/sections/Experience.jsx';
+import Updates from './components/sections/Updates.jsx';
 import Writing from './components/sections/Writing.jsx';
 import Article from './components/sections/Article.jsx';
 import Contact from './components/sections/Contact.jsx';
@@ -19,7 +20,8 @@ import { skills } from './data/skills.js';
 /* Hash routes: ''  → the one-page portfolio
                 '#/work/<slug>'   → project case study
                 '#/writing/<id>'  → article
-                '#/contact'       → contact page */
+                '#/contact'       → contact page
+                */
 function parseHash() {
   if (/^#\/contact\/?$/.test(window.location.hash)) return { kind: 'contact' };
   const [, kind, id] = window.location.hash.match(/^#\/(work|writing)\/([^/?#]+)/) || [];
@@ -52,7 +54,8 @@ export default function App() {
   React.useLayoutEffect(() => {
     const from = prevKind.current;
     prevKind.current = route.kind;
-    const back = route.kind === 'home' && from !== 'home' ? from : null; // 'work' | 'writing' | 'contact' section ids
+    const SECTION = { work: 'work', writing: 'writing', contact: 'contact' }; // sections that exist on the home page
+    const back = route.kind === 'home' && from !== 'home' ? SECTION[from] || 'top' : null;
     const target = pendingScroll.current || back;
     pendingScroll.current = null;
     // 'instant' — the global scroll-behavior: smooth would otherwise animate a page swap
@@ -87,6 +90,7 @@ export default function App() {
     ['service', 'Service', services.length],
     ['skills', 'Skills', skills.length],
     ['experience', 'Experience', '1y+'],
+    ...(content.updates?.length ? [['updates', 'Updates', content.updates.length]] : []),
     ['writing', 'Writing'],
     ['contact', 'Contact'],
   ];
@@ -126,6 +130,7 @@ export default function App() {
             <Services onContact={toContact} />
             <Skills />
             <Experience items={content.experience} />
+            <Updates items={content.updates} contact={content.contact} />
             <Writing items={content.writings} onOpen={openWriting} />
             <Contact contact={content.contact} status={status} onOpen={toContact} />
           </>

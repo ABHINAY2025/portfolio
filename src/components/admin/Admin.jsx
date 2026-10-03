@@ -11,6 +11,7 @@ import Hero from '../sections/Hero.jsx';
 import About from '../sections/About.jsx';
 import Experience from '../sections/Experience.jsx';
 import Projects from '../sections/Projects.jsx';
+import Updates from '../sections/Updates.jsx';
 import Writing from '../sections/Writing.jsx';
 import Footer from '../layout/Footer.jsx';
 
@@ -29,6 +30,7 @@ function keyContent(c) {
   return {
     ...c,
     experience: withKeys(c.experience),
+    updates: withKeys(c.updates),
     projects: withKeys(c.projects),
     writings: withKeys(c.writings),
   };
@@ -40,6 +42,7 @@ function cleanContent(c) {
     about: c.about,
     contact: c.contact,
     experience: stripKeys(c.experience),
+    updates: stripKeys(c.updates),
     projects: stripKeys(c.projects),
     writings: stripKeys(c.writings),
   };
@@ -301,6 +304,34 @@ export default function Admin() {
             )}
           />
           <PreviewBox><Projects items={content.projects} /></PreviewBox>
+        </Panel>
+
+        {/* UPDATES — LinkedIn embeds */}
+        <Panel
+          title="Updates (LinkedIn)"
+          desc={'Paste a LinkedIn post link (or the code from the post’s “Embed this post” menu). The site shows LinkedIn’s own embed, so each post stays current. Leave the list empty to hide the section.'}
+        >
+          <ListEditor
+            items={content.updates || []}
+            onChange={(v) => set('updates', v)}
+            makeNew={() => ({ _k: nk(), url: '', note: '', height: 560 })}
+            addLabel="Add post"
+            render={(it, setIt) => (
+              <div className="flex flex-col gap-3">
+                <TextField
+                  label="LinkedIn post link or embed code"
+                  value={it.url}
+                  onChange={(v) => setIt({ ...it, url: v })}
+                  placeholder="https://www.linkedin.com/posts/…-activity-7…"
+                />
+                <div className="grid grid-cols-[1fr_120px] gap-3 max-[600px]:grid-cols-1">
+                  <TextField label="Note (shown under the post)" value={it.note} onChange={(v) => setIt({ ...it, note: v })} />
+                  <TextField label="Height (px)" value={it.height} onChange={(v) => setIt({ ...it, height: v })} />
+                </div>
+              </div>
+            )}
+          />
+          <PreviewBox><Updates items={content.updates} contact={content.contact} /></PreviewBox>
         </Panel>
 
         {/* WRITING */}

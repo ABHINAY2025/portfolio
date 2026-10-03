@@ -272,9 +272,16 @@ const contact = {
   resumeUrl: RESUME_URL,
 };
 
+/* Latest-from-LinkedIn posts. Each entry is a link you copy from LinkedIn
+   (the post URL, or the code from its "Embed this post" menu); the site renders
+   LinkedIn's own embed, so the post always shows its current content. Edit the
+   list in /admin — no deploy needed. */
+export const updates = [];
+
 /* the full editable content tree (static defaults) */
 export const defaultContent = {
   hero,
+  updates,
   about,
   experience,
   projects,
